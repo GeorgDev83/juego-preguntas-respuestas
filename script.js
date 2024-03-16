@@ -1,13 +1,11 @@
 'use strict';
 let objectQuestions = null;
-let anchors;
+let anchors = null;
 
 function initialize(data) {
-  anchors = document.querySelectorAll('.anchor__answer');//document.getElementById("2");
-  /* const questionsArray = getQuestions(data); */
   printQuestions(data);
+  anchors = document.querySelectorAll('.anchor__answer');
   addEventListenerCustom();
-  console.log(anchors);
 }
 
 const doFetch = async (initializeCb) => {
@@ -23,18 +21,19 @@ const doFetch = async (initializeCb) => {
 } */
 
 const printQuestions = (questionsArray) => {
-  const answerContainer = document.getElementsByClassName("answerContainer");
+  //const answerContainer = document.getElementsByClassName("answerContainer");
   
   
     objectQuestions = questionsArray[0];
-    const questionH2 = document.querySelector(".question")
-    questionH2.innerHTML = objectQuestions.question
-    const answersUl = document.querySelector(".answerContainer")
+    const questionH2 = document.querySelector(".question");
+    questionH2.innerHTML = objectQuestions.question;
+    const answersUl = document.querySelector(".answerContainer");
     for (let index = 0; index < objectQuestions.answers.length; index++) {
       const answer = objectQuestions.answers[index];
       let stringLi = document.createElement('li');
       stringLi.className = `style--${index%2===0?'even':'odd'}`;
       let anchorAns = document.createElement('a');
+      anchorAns.id = index;
       anchorAns.className = "anchor__answer";
       anchorAns.innerText = answer;
       anchorAns.href = "";
@@ -46,14 +45,22 @@ const printQuestions = (questionsArray) => {
 
 // Cambiar nombre función a inglés checkAnswer()
 function comprobarRespuestaCorrecta(id) {
-  alert(id.contains(indice));
-  const indice = pregunta.answers.indexOf(pregunta.correct);
-  return id.contains(indice);
+  let isCorrect = false;
+  const arrayAns = objectQuestions.answers;
+  for (let index = 0; index < arrayAns.length; index++) {
+    if (arrayAns[index].includes(objectQuestions.correct)) {
+      if(id==index){
+        isCorrect = true;
+      }
+    }    
+  }
+  alert(isCorrect);
+  return isCorrect;
 }
 
 function addEventListenerCustom() {
   //anchors.addEventListener("mouseover", function() {console.log('Hola!');});
-   anchors.forEach(element => {
+  anchors.forEach(element => {
     element.addEventListener("click", function(e) {comprobarRespuestaCorrecta(e.target.id)});
   });
 }

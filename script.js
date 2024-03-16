@@ -30,12 +30,18 @@ const printQuestions = (questionsArray) => {
     const questionH2 = document.querySelector(".question")
     questionH2.innerHTML = objectQuestions.question
     const answersUl = document.querySelector(".answerContainer")
-     for (let index = 0; index < objectQuestions.answers.length; index++) {
+    for (let index = 0; index < objectQuestions.answers.length; index++) {
       const answer = objectQuestions.answers[index];
-      let stringLi = `<li class="style--${index%2===0?"even":"odd"}" id="liAnswer__id-${index}"> <a id="${index}" class="anchor__answer" href="" >${answer}</a></li>`
-        const answerlis = document.createElement("li");
-        answersUl.innerHTML += stringLi      
-    }    
+      let stringLi = document.createElement('li');
+      stringLi.className = `style--${index%2===0?'even':'odd'}`;
+      let anchorAns = document.createElement('a');
+      anchorAns.className = "anchor__answer";
+      anchorAns.innerText = answer;
+      anchorAns.href = "";
+      //`<li class="style--${index%2===0?"even":"odd"}" id="liAnswer__id-${index}"> <a class="anchor__answer" href='javascript:void(0);' >${answer}</a></li>`;
+      stringLi.appendChild(anchorAns);
+      answersUl.appendChild(stringLi);// .innerHTML += stringLi      
+    }
 }
 
 // Cambiar nombre función a inglés checkAnswer()
@@ -48,7 +54,7 @@ function comprobarRespuestaCorrecta(id) {
 function addEventListenerCustom() {
   //anchors.addEventListener("mouseover", function() {console.log('Hola!');});
    anchors.forEach(element => {
-    element.addEventListener("click", function(e) {comprobarRespuestaCorrecta(e.id)});
+    element.addEventListener("click", function(e) {comprobarRespuestaCorrecta(e.target.id)});
   });
 }
 

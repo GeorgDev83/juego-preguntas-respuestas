@@ -1,39 +1,55 @@
 'use strict';
+let objectQuestions = null;
+let anchors;
 
-function initialize() {
-    getQuestions();
-  
-  
+function initialize(data) {
+  anchors = document.querySelectorAll('.anchor__answer');//document.getElementById("2");
+  /* const questionsArray = getQuestions(data); */
+  printQuestions(data);
+  addEventListenerCustom();
+  console.log(anchors);
 }
 
-//! Revisar/ cambiar por version nueva ECMA es6
-const getQuestions = async () => {
-  try {
-    const res = await fetch("https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json");
-    let data = await res.json();
-    printQuestions(data);
-  } catch (error) {
-      console.log(error);
-  }
+const doFetch = async (initializeCb) => {
+  const urlFetch = "https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json";
+  await fetch(urlFetch)
+  .then(res => res.json())
+  .then(questions => initializeCb(questions))
+  .catch((error) => console.error(error));
 }
 
+/* function getQuestions(data) {
+  return data;
+} */
 
-//
-function printQuestions(questions) {
+const printQuestions = (questionsArray) => {
   const answerContainer = document.getElementsByClassName("answerContainer");
   
   
-    const objectQuestions = questions[0];
+    objectQuestions = questionsArray[0];
     const questionH2 = document.querySelector(".question")
     questionH2.innerHTML = objectQuestions.question
     const answersUl = document.querySelector(".answerContainer")
-    console.log(objectQuestions);
-    for (let answer of objectQuestions.answers) {
-        let stringLi = `<li>${answer}</li>`
+     for (let index = 0; index < objectQuestions.answers.length; index++) {
+      const answer = objectQuestions.answers[index];
+      let stringLi = `<li class="style--${index%2===0?"even":"odd"}" id="liAnswer__id-${index}"> <a id="${index}" class="anchor__answer" href="" >${answer}</a></li>`
         const answerlis = document.createElement("li");
-        answersUl.innerHTML += stringLi
-    } 
-    
+        answersUl.innerHTML += stringLi      
+    }    
 }
 
-document.addEventListener("DOMContentLoaded", initialize());
+// Cambiar nombre función a inglés checkAnswer()
+function comprobarRespuestaCorrecta(id) {
+  alert(id.contains(indice));
+  const indice = pregunta.answers.indexOf(pregunta.correct);
+  return id.contains(indice);
+}
+
+function addEventListenerCustom() {
+  //anchors.addEventListener("mouseover", function() {console.log('Hola!');});
+   anchors.forEach(element => {
+    element.addEventListener("click", function(e) {comprobarRespuestaCorrecta(e.id)});
+  });
+}
+
+document.addEventListener("DOMContentLoaded", doFetch(initialize));

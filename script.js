@@ -47,6 +47,7 @@ const printQuestions = (questionsArray) => {
 function comprobarRespuestaCorrecta(id) {
   let isCorrect = false;
   const arrayAns = objectQuestions.answers;
+  //cambiar por el uso de métodos de array
   for (let index = 0; index < arrayAns.length; index++) {
     if (arrayAns[index].includes(objectQuestions.correct)) {
       if(id==index){

@@ -30,19 +30,20 @@ body {
 }
 
 h1 {
-  font-size: 4.5rem;
+  font-size: 5rem;
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: 0.3rem;
   padding: 3rem;
-  color: transparent;
-  /* text-shadow: 2px 2px 2px white; */
-  background-image: url(img/Hollywood_Sign_\(Zuschnitt\).jpg);
+  color:transparent;
+  /* text-shadow: 1px 1px 2px white; */
+  background-image: url(img/1366_2000.jpeg);
   background-size: cover;
   background-position: center;
-  background-position-y: -40px;
+  /* background-position-y: -40px; */
   background-clip: text;
   -webkit-background-clip: text;
+  /* opacity: 75%; */
 }
 
 ul {
@@ -106,7 +107,7 @@ ul > li > a,
     height: 3rem;
     background-color: var(--azul-oscuro);
     position: absolute;
-    bottom: -2.9rem;
+    bottom: -2.7rem;
     left: calc(50% - 0.5rem);
     clip-path: polygon(0 0, 100% 0, 100% 100%);
   }

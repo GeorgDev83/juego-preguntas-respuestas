@@ -4,7 +4,7 @@ let anchors = null;
 
 function initialize(data) {
   printQuestions(data);
-  anchors = document.querySelectorAll(".anchor__answer");
+  htmlRecovery();
   addEventListenerCustom();
 }
 
@@ -22,26 +22,35 @@ const doFetch = async (initializeCb) => {
 } */
 
 const printQuestions = (questionsArray) => {
-  //const answerContainer = document.getElementsByClassName("answerContainer");
-
-  objectQuestions = questionsArray[0];
-  const questionH2 = document.querySelector(".question");
+  objectQuestions = questionsArray[1];
+  const questionH2 = document.querySelector(".questionContainer");
   questionH2.innerHTML = objectQuestions.question;
-  const answersUl = document.querySelector(".answerContainer");
-  for (let index = 0; index < objectQuestions.answers.length; index++) {
-    const answer = objectQuestions.answers[index];
-    let stringLi = document.createElement("li");
-    stringLi.className = `style--${index % 2 === 0 ? "even" : "odd"}`;
-    let anchorAns = document.createElement("a");
-    anchorAns.id = index;
-    anchorAns.className = "anchor__answer";
-    anchorAns.innerText = answer;
-    anchorAns.href = "";
-    //`<li class="style--${index%2===0?"even":"odd"}" id="liAnswer__id-${index}"> <a class="anchor__answer" href='javascript:void(0);' >${answer}</a></li>`;
-    stringLi.appendChild(anchorAns);
-    answersUl.appendChild(stringLi); // .innerHTML += stringLi
-  }
+  const answersLi = createLiAnswers(objectQuestions.answers);
 };
+
+function createLiAnswers(answers) {
+  const answersUl = document.querySelector(".answerContainer");
+  for (let index = 0; index < answers.length; index++) {
+    const elementLi = document.createElement('li');
+    elementLi.className = 'style--li';/* ${index%2===0?'even':'odd'}`; */
+    const anchor = createAnchorAnswer(index, answers[index]);
+    elementLi.appendChild(anchor);
+    answersUl.appendChild(elementLi);
+  }
+}
+
+function createAnchorAnswer(index, answer) {
+  const anchorAns = document.createElement('a');
+  anchorAns.id = "anchor_"+index;
+  anchorAns.className = "anchor__answer";
+  anchorAns.innerText = answer;
+  anchorAns.href = "#";
+  return anchorAns;
+}
+
+function htmlRecovery() {
+  anchors = document.querySelectorAll('.anchor__answer');
+}
 
 function checkAnswer(id) {
   const correctIndex = objectQuestions.answers.reduce(

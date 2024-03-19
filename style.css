@@ -63,6 +63,10 @@ li {
   text-decoration: none;
 }
 
+a{
+
+}
+
 /*? Lograr que el anochor ocupe todo el li o hacer el li clickable */
 ul > a > li,
 .li__answer {
@@ -94,7 +98,7 @@ ul > a > li,
   width: 95%;
   height: auto;
   margin: 2rem;
-  padding: 2rem;
+  /* padding: 2rem; */
   opacity: 85%;
 }
 
@@ -126,6 +130,10 @@ ul > a > li,
   transition-duration: 0.4s;
 }
 
+
+.style--a {
+  margin: 2rem;
+}
 .style--a > li:hover {
   color: antiquewhite;
   transition-duration: 0.4s;

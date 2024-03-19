@@ -7,13 +7,14 @@ let questionsArray = null;
 let urlImagesArray = [];
 let lis = [];
 let indexPregunta = 0;
+let counter = 0;
 
 function initialize(questions) {
   questionsArray = questions;
-  printQuestions(indexPregunta);
-  doFetchPosterImage(questions);
+  //doFetchPosterImage(questions);
   htmlRecovery();
-  addEventListenerCustom();
+  printQuestions(indexPregunta);
+  //addEventListenerCustom();
 }
 
 const doFetch = async (initializeCb) => {
@@ -75,15 +76,9 @@ function getRandomInt(min, max) {
 
 async function setImage() {
   const imgPoster = document.querySelector(".answerContainer");
-  console.log(urlImagesArray);
-
-  const url = urlImagesArray[indexPregunta];
-  console.log(url);
-  imgPoster.style.background = `url(${
-    url.replace('"', "'")
-  }) no-repeat center center /cover`;
-  console.log(imgPoster);
-  console.log(urlImagesArray[5])
+  const url = urlImagesArray[indexPregunta - 1];
+  imgPoster.style.background = `url(${url}) no-repeat center center /cover fixed`;
+  
 }
 
 const printQuestions = () => {
@@ -147,24 +142,39 @@ function htmlRecovery() {
   lis = document.querySelectorAll(".li__answer");
 }
 
-function checkAnswer(id) {
-  let identificador = id;
+function checkAnswer(evento) {
+  
+  console.log(evento.target.id);
+  let identificador = evento.target.id;
   identificador = identificador.replace("li_", "");
+  console.log('id ='+ identificador);
   const correctIndex = objectQuestion.answers.findIndex(
-    (answer) => answer == objectQuestion.correct
+    (answer) => answer.includes(objectQuestion.correct)
   );
-
+    console.log(correctIndex);
   if (correctIndex == identificador) {
-    printQuestions();
+    counter++;
+    let h3 = document.querySelector('#counter');
+    h3.innerHTML = 'hits: '+ counter;
+    h3.style.fontSize = '2rem';
+    h3.style.color = 'white';
   }
+  printQuestions();
 }
 
 function addEventListenerCustom() {
-  console.log(lis);
   lis.forEach((element) => {
     element.addEventListener("click", function (e) {
-      checkAnswer(e.target.id);
+      //e.preventDefault();
+      checkAnswer(e);
     });
+  });
+}
+
+
+function removeEventListenerCustom() {
+  lis.forEach((element) => {
+  element.removeEventListener("click",() => console.log('funciono') , true);
   });
 }
 

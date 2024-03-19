@@ -11,7 +11,7 @@ let indexPregunta = 0;
 function initialize(questions) {
   questionsArray = questions;
   printQuestions(indexPregunta);
-  doFetchPosterImage(setImage, questions); 
+  doFetchPosterImage(questions);
   htmlRecovery();
   addEventListenerCustom();
 }
@@ -25,7 +25,7 @@ const doFetch = async (initializeCb) => {
     .catch((error) => console.error(error));
 };
 
-const doFetchPosterImage = async (setImageCb, questions) => {
+const doFetchPosterImage = async (questions) => {
   await questions.forEach((element) => {
     const title = extractTitleOrName(element);
     const urlTmdbMovies = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&query=${title}`;
@@ -67,14 +67,23 @@ const doFetchPersonImage = async (element) => {
     .catch((error) => console.error(error));
 };
 
-function setImage(url, elemento) {
-  if (!elemento) {
-    //url == urlAPIImages) {
-    doFetchPersonImage(setImage, elemento);
-  } else {
-    /* const imgPoster = document.getElementById("generalContainer");
-    imgPoster.style.background = `url(${url}) no-repeat center center /cover`; */
-  }
+function getRandomInt(min, max) {
+  const minCeiled = Math.ceil(min);
+  const maxFloored = Math.floor(max);
+  return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+}
+
+async function setImage() {
+  const imgPoster = document.querySelector(".answerContainer");
+  console.log(urlImagesArray);
+
+  const url = urlImagesArray[indexPregunta];
+  console.log(url);
+  imgPoster.style.background = `url(${
+    url.replace('"', "'")
+  }) no-repeat center center /cover`;
+  console.log(imgPoster);
+  console.log(urlImagesArray[5])
 }
 
 const printQuestions = () => {
@@ -86,7 +95,8 @@ const printQuestions = () => {
   //questionH2.remove();
   const generalContainer = document.querySelector("#generalContainer");
   while (generalContainer.firstChild) {
-    generalContainer.removeChild(generalContainer.firstChild)};
+    generalContainer.removeChild(generalContainer.firstChild);
+  }
   generalContainer.appendChild(questionH2);
   const answersLi = createAnchorAnswers(objectQuestion.answers);
 };
@@ -120,7 +130,7 @@ function createAnchorAnswers(answers) {
   }
   htmlRecovery();
   addEventListenerCustom();
-  
+  setImage();
 }
 
 function createLiAnswer(index, answer) {
@@ -129,25 +139,23 @@ function createLiAnswer(index, answer) {
   anchorAns.className = "li__answer";
   anchorAns.innerText = answer;
   anchorAns.href = "#";
-  
+
   return anchorAns;
 }
 
 function htmlRecovery() {
-    lis = document.querySelectorAll('.li__answer');
-
-  
-  
+  lis = document.querySelectorAll(".li__answer");
 }
 
 function checkAnswer(id) {
   let identificador = id;
   identificador = identificador.replace("li_", "");
-  const correctIndex = objectQuestion.answers.findIndex(answer => answer == objectQuestion.correct);
+  const correctIndex = objectQuestion.answers.findIndex(
+    (answer) => answer == objectQuestion.correct
+  );
 
   if (correctIndex == identificador) {
     printQuestions();
-
   }
 }
 

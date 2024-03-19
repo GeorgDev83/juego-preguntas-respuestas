@@ -14,6 +14,7 @@ function initialize(questions) {
   doFetchPosterImage(setImage, questions);
   htmlRecovery();
   addEventListenerCustom();
+  console.log(urlImagesArray);
 }
 
 const doFetch = async (initializeCb) => {

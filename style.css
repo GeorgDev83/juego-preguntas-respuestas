@@ -37,7 +37,7 @@ h1 {
   padding: 3rem;
   color:transparent;
   /* text-shadow: 1px 1px 2px white; */
-  background-image: url(img/1366_2000.jpeg);
+  background-image: url(img/5.png);
   background-size: cover;
   background-position: center;
   /* background-position-y: -40px; */
@@ -60,24 +60,23 @@ li {
   border: 2px solid black;
   border-radius: 1.5rem;
   width: 75vw;
+  text-decoration: none;
 }
 
 /*? Lograr que el anochor ocupe todo el li o hacer el li clickable */
-ul > li > a,
-.anchor__answer {
-  display: block; 
+ul > a > li,
+.li__answer {
+  /*display: block;*/ 
   width: 100%;
   font-size: 1.8rem;
   font-weight: bold;
-  text-decoration: none;
+  
   color: var(--oscuro);
 }
 
-.generalContainer {
-  display: flex;
-}
 
-.questionContainer {
+
+#generalContainer {
   position: relative;
   background-color: var(--azul-oscuro);
   padding: 2rem;
@@ -100,7 +99,7 @@ ul > li > a,
 }
 
 @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
-  .questionContainer::after {
+  #generalContainer::after {
     content: "";
     display: inline-block;
     width: 3rem;
@@ -113,20 +112,21 @@ ul > li > a,
   }
 }
 
-.style--li:nth-child(even) {
+.li__answer:nth-child(even) {
   background-color: var(--azul-claro);
+  
 }
 
-.style--li:nth-child(odd) {
+.li__answer:nth-child(odd) {
   background-color: var(--azul);
 }
 
-.style--li:hover {
+.li__answer:hover {
   background-color: var(--azul-oscuro);
   transition-duration: 0.4s;
 }
 
-.style--li > a:hover {
+.style--a > li:hover {
   color: antiquewhite;
   transition-duration: 0.4s;
 }

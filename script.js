@@ -5,16 +5,15 @@ const urlAPIImages = "https://image.tmdb.org/t/p/w500";
 let objectQuestion = null;
 let questionsArray = null;
 let urlImagesArray = [];
-let anchors = null;
-let indexPregunta = 1;
+let lis = [];
+let indexPregunta = 0;
 
 function initialize(questions) {
   questionsArray = questions;
   printQuestions(indexPregunta);
-  doFetchPosterImage(setImage, questions);
+  doFetchPosterImage(setImage, questions); 
   htmlRecovery();
   addEventListenerCustom();
-  console.log(urlImagesArray);
 }
 
 const doFetch = async (initializeCb) => {
@@ -78,11 +77,18 @@ function setImage(url, elemento) {
   }
 }
 
-const printQuestions = (indexQuestion) => {
-  objectQuestion = questionsArray[indexQuestion];
-  const questionH2 = document.querySelector(".questionContainer");
+const printQuestions = () => {
+  objectQuestion = questionsArray[indexPregunta++];
+  //const questionH2 = document.querySelector(".questionContainer");
+  const questionH2 = document.createElement("div");
+  questionH2.className = ".questionContainer";
   questionH2.innerHTML = objectQuestion.question;
-  const answersLi = createLiAnswers(objectQuestion.answers);
+  //questionH2.remove();
+  const generalContainer = document.querySelector("#generalContainer");
+  while (generalContainer.firstChild) {
+    generalContainer.removeChild(generalContainer.firstChild)};
+  generalContainer.appendChild(questionH2);
+  const answersLi = createAnchorAnswers(objectQuestion.answers);
 };
 
 function extractTitleOrName(objQuestion) {
@@ -98,42 +104,56 @@ function extractTitleOrName(objQuestion) {
   } else return objQuestion.correct;
 }
 
-function createLiAnswers(answers) {
+function createAnchorAnswers(answers) {
   const answersUl = document.querySelector(".answerContainer");
+  while (answersUl.firstChild) {
+    answersUl.removeChild(answersUl.firstChild);
+  }
+
   for (let index = 0; index < answers.length; index++) {
-    const elementLi = document.createElement("li");
-    elementLi.className = "style--li";
-    const anchor = createAnchorAnswer(index, answers[index]);
+    const elementLi = document.createElement("a");
+    elementLi.id = "a_" + index;
+    elementLi.className = "style--a";
+    const anchor = createLiAnswer(index, answers[index]);
     elementLi.appendChild(anchor);
     answersUl.appendChild(elementLi);
   }
+  htmlRecovery();
+  addEventListenerCustom();
+  
 }
 
-function createAnchorAnswer(index, answer) {
-  const anchorAns = document.createElement("a");
-  anchorAns.id = "anchor_" + index;
-  anchorAns.className = "anchor__answer";
+function createLiAnswer(index, answer) {
+  const anchorAns = document.createElement("li");
+  anchorAns.id = "li_" + index;
+  anchorAns.className = "li__answer";
   anchorAns.innerText = answer;
   anchorAns.href = "#";
+  
   return anchorAns;
 }
 
 function htmlRecovery() {
-  anchors = document.querySelectorAll(".anchor__answer");
+    lis = document.querySelectorAll('.li__answer');
+
+  
+  
 }
 
 function checkAnswer(id) {
-  id = id.replace("anchor_", "");
-  const correctIndex = objectQuestion.answers.reduce(
-    (acc, current, index, array) =>
-      acc + current.includes(objectQuestion.correct) ? index : 0,
-    0
-  );
-  return correctIndex == id;
+  let identificador = id;
+  identificador = identificador.replace("li_", "");
+  const correctIndex = objectQuestion.answers.findIndex(answer => answer == objectQuestion.correct);
+
+  if (correctIndex == identificador) {
+    printQuestions();
+
+  }
 }
 
 function addEventListenerCustom() {
-  anchors.forEach((element) => {
+  console.log(lis);
+  lis.forEach((element) => {
     element.addEventListener("click", function (e) {
       checkAnswer(e.target.id);
     });

@@ -1,38 +1,105 @@
-"use strict";
-let objectQuestions = null;
-let anchors = null;
+'use strict';
 
-function initialize(data) {
-  printQuestions(data);
+const apiKeyTmdb = 'd41eaf7497a56914ed95533075105d3a';
+const urlAPIImages = 'https://image.tmdb.org/t/p/w500';
+let objectQuestion = null;
+let questionsArray = null;
+let urlImagesArray = [];
+let anchors = null;
+let indexPregunta = 1;
+
+function initialize(questions) {
+  questionsArray = questions;
+  printQuestions(indexPregunta);
+  doFetchPosterImage(setImage, questions);
   htmlRecovery();
   addEventListenerCustom();
 }
 
 const doFetch = async (initializeCb) => {
-  const urlFetch =
-    "https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json";
+  const urlFetch = "https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json";
   await fetch(urlFetch)
-    .then((res) => res.json())
-    .then((questions) => initializeCb(questions))
+  .then(res => res.json())
+  .then(questions => initializeCb(questions))
+  .catch((error) => console.error(error));
+}
+
+const doFetchPosterImage = async (setImageCb, questions) => {
+  await questions.forEach(element => {
+    const title = extractTitleOrName(element);
+    const urlTmdbMovies = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&query=${title}`;
+    /* const urlTmdb = `https://api.themoviedb.org/3/search/movie?api_key=${apiKeyTmdb}&query=${key_title}&include_adult=false&language=en-US&page=1`; */
+    fetch(urlTmdbMovies)
+    .then(res => res.json())
+    .then(videosImages => {   
+      let cadena = '';
+      if(videosImages["results"] !== undefined && videosImages.results.length > 0) {
+        if(videosImages.results[0].backdrop_path) {
+          cadena += urlAPIImages + videosImages.results[0].backdrop_path;
+          urlImagesArray.push(cadena);
+        } else {
+          doFetchPersonImage(element);
+        }
+      }
+    })
     .catch((error) => console.error(error));
-};
+  });
+}
 
-/* function getQuestions(data) {
-  return data;
-} */
+const doFetchPersonImage = async(element) => {
+  const title = extractTitleOrName(element);
+  const urlTmdbActors = `https://api.themoviedb.org/3/search/person?api_key=${apiKeyTmdb}&query=${title}`;
+  await fetch(urlTmdbActors)
+  .then(res => res.json())
+  .then((videosImages) => {
+    let cadena = '';
+    if(videosImages["results"] && videosImages.results.length > 0) {
+      if (videosImages.results[0].profile_path) {
+        cadena += urlAPIImages + videosImages.results[0].profile_path;
+        urlImagesArray.push(cadena);
+      }
+    }
+  })
+  .catch((error) => console.error(error));
+}
 
-const printQuestions = (questionsArray) => {
-  objectQuestions = questionsArray[1];
-  const questionH2 = document.querySelector(".questionContainer");
-  questionH2.innerHTML = objectQuestions.question;
-  const answersLi = createLiAnswers(objectQuestions.answers);
-};
+function setImage(url, elemento) {
+  if (!elemento){//url == urlAPIImages) {
+    doFetchPersonImage(setImage, elemento);
+  } else {
+    
+    /* const imgPoster = document.getElementById("generalContainer");
+    imgPoster.style.background = `url(${url}) no-repeat center center /cover`; */
+  }
+}
+
+const printQuestions = (indexQuestion) => {
+    objectQuestion = questionsArray[indexQuestion];
+    const questionH2 = document.querySelector(".questionContainer");
+    questionH2.innerHTML = objectQuestion.question;
+    const answersLi = createLiAnswers(objectQuestion.answers);
+}
+
+function extractTitleOrName(objQuestion) {
+  if (objQuestion.question.includes('\"')){
+    const title = objQuestion.question.split('\"');
+    return title[1];
+  }  
+  else if (objQuestion.question.includes("'")){
+    const title = objQuestion.question.split("'");
+    return title[1];
+  } else if (objQuestion.question.includes("`")){
+    const title = objQuestion.question.split("`");
+    return title[1];
+  } else
+  return objQuestion.correct;
+}
 
 function createLiAnswers(answers) {
   const answersUl = document.querySelector(".answerContainer");
   for (let index = 0; index < answers.length; index++) {
     const elementLi = document.createElement('li');
-    elementLi.className = 'style--li';/* ${index%2===0?'even':'odd'}`; */
+    elementLi.className = 'style--li';
     const anchor = createAnchorAnswer(index, answers[index]);
     elementLi.appendChild(anchor);
     answersUl.appendChild(elementLi);
@@ -53,20 +120,14 @@ function htmlRecovery() {
 }
 
 function checkAnswer(id) {
-  const correctIndex = objectQuestions.answers.reduce(
-    (acc, current, index, array) =>
-      acc + current.includes(objectQuestions.correct) ? index : 0,
-    0
-  );
-  return correctIndex == id;
+  id = id.replace('anchor_', '');
+  const correctIndex = objectQuestions.answers.reduce((acc, current, index, array) => acc + current.includes(objectQuestions.correct)?index:0, 0);
+  return correctIndex==id;
 }
 
 function addEventListenerCustom() {
-  //anchors.addEventListener("mouseover", function() {console.log('Hola!');});
-  anchors.forEach((element) => {
-    element.addEventListener("click", function (e) {
-      checkAnswer(e.target.id);
-    });
+  anchors.forEach(element => {
+    element.addEventListener("click", function(e) {checkAnswer(e.target.id)});
   });
 }
 

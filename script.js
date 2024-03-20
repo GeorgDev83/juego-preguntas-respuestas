@@ -1,11 +1,9 @@
 "use strict";
 
-const objectFilmsQuest = {
-  currentQuestion: null,
-  questionsArray: [],
-  indexPregunta: 0,
-  counter: 0,
-};
+let questionsArray = [];
+let currentQuestion = {};
+let indexPregunta = 0;
+let counter = 0;
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -13,8 +11,8 @@ const objectFilmsQuest = {
  * @param {array} questions Array de preguntas del fichero JSON.
  */
 function initialize(questions) {
-  objectFilmsQuest.questionsArray = questions;
-  setRandomArray(objectFilmsQuest.questionsArray);
+  questionsArray = questions;
+  setRandomArray(questionsArray);
   updateUI();
 }
 
@@ -23,7 +21,7 @@ function initialize(questions) {
  *
  */
 function updateUI() {
-  printCurrentQuestion();
+  printCurrentQuestion(getCurrentObjectQuestionFromArray());
   addEventListenerCustom(htmlRecovery());
 }
 
@@ -79,10 +77,10 @@ function removeChildsCustom(elemento) {
  *
  * @return {Element} elemento contenedor.
  */
-function createHTMLQuestion() {
+function createHTMLQuestion(filmQuestion) {
   const elementQuestion = document.createElement("div");
   elementQuestion.className = ".questionContainer";
-  elementQuestion.innerHTML = objectFilmsQuest.currentQuestion.question;
+  elementQuestion.innerHTML = filmQuestion.question;
   elementQuestion.style.fontSize = "2rem";
   return elementQuestion;
 }
@@ -93,20 +91,22 @@ function createHTMLQuestion() {
  * @return {Object} objeto de la pregunta actual.
  */
 function getCurrentObjectQuestionFromArray() {
-  return objectFilmsQuest.questionsArray[objectFilmsQuest.indexPregunta];
+  console.log("ASD: " + currentQuestion);
+  currentQuestion = questionsArray[indexPregunta];
+  return currentQuestion;
 }
 
 /**
  * Crea y muestra en el HTML la pregunta con sus respuestas
  *
  */
-const printCurrentQuestion = () => {
-  objectFilmsQuest.currentQuestion = getCurrentObjectQuestionFromArray();
-  const elementQuestion = createHTMLQuestion();
+const printCurrentQuestion = (filmQuestion) => {
+  console.log(filmQuestion);
+  const elementQuestion = createHTMLQuestion(filmQuestion);
   const generalContainer = document.querySelector("#generalContainer");
   removeChildsCustom(generalContainer);
   generalContainer.appendChild(elementQuestion);
-  createAnchorsAnswers(objectFilmsQuest.currentQuestion.answers);
+  createAnchorsAnswers(filmQuestion.answers);
 };
 
 /**
@@ -174,12 +174,12 @@ function checkAnswer(evento) {
   evento.preventDefault();
   if (
     extractNumericIdFromStringId(evento.target.id) ==
-    findCorrectIndexOfAnswers()
+    findCorrectIndexOfAnswers(currentQuestion.answers, currentQuestion.correct)
   ) {
     incrementCounter();
     printHTMLCounter();
   }
-  objectFilmsQuest.indexPregunta++;
+  indexPregunta++;
   updateUI();
 }
 
@@ -188,10 +188,8 @@ function checkAnswer(evento) {
  *
  * @return {number} Índice de la pregunta correcta.
  */
-function findCorrectIndexOfAnswers() {
-  return objectFilmsQuest.currentQuestion.answers.findIndex((answer) =>
-    answer.includes(objectFilmsQuest.currentQuestion.correct)
-  );
+function findCorrectIndexOfAnswers(answers, correctAnswer) {
+  return answers.findIndex((answer) => answer.includes(correctAnswer));
 }
 
 /**
@@ -212,7 +210,7 @@ function extractNumericIdFromStringId(idString) {
  *
  */
 function incrementCounter() {
-  objectFilmsQuest.counter++;
+  counter++;
 }
 
 /**
@@ -221,7 +219,7 @@ function incrementCounter() {
  */
 function printHTMLCounter() {
   let h3 = document.querySelector("#counter");
-  h3.innerHTML = "hits: " + objectFilmsQuest.counter;
+  h3.innerHTML = "hits: " + counter;
   h3.style.fontSize = "2rem";
   h3.style.color = "white";
 }

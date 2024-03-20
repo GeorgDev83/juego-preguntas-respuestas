@@ -5,6 +5,8 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
+
+/*! cambiar nombres de colores al inglés */
 :root {
   --oscuro: #011526;
   --azul-oscuro: #4D3273;
@@ -67,14 +69,13 @@ a{
   margin-left: 2rem;
 }
 
-/*? Lograr que el anochor ocupe todo el li o hacer el li clickable */
 ul > a > li,
 .li__answer {
   /*display: block;*/ 
   width: 90%;
   font-size: 1.8rem;
   font-weight: bold;
-  
+  cursor: pointer;
   color: var(--oscuro);
 }
 

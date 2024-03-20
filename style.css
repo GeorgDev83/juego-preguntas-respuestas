@@ -37,14 +37,14 @@ body {
 /*? -- ESTILOS H1 -- */
 
 h1 {
-  font-size: 5rem;
+  font-size: 4.7rem;
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: 0.3rem;
   padding: 3rem;
   color: transparent;
   /* text-shadow: 1px 1px 2px white; */
-  background-image: url(img/5.png);
+  background-image: url(img/Diseno_sin_titulo.png);
   background-size: cover;
   background-position: center;
   /* background-position-y: -40px; */
@@ -60,9 +60,9 @@ ul {
 }
 
 li {
-  margin: 1rem auto;
+  margin: 0.5rem auto;
   text-align: center;
-  padding: 2rem;
+  padding: 1.5rem;
   border: 2px solid black;
   border-radius: 1.5rem;
   width: 75vw;
@@ -84,9 +84,8 @@ ul > a > li,
 }
 
 #generalContainer {
-  position: relative;
   background-color: var(--dark-violet);
-  padding: 2rem;
+  padding: 1rem;
   margin: 0 2rem 2rem 2rem;
   border-radius: 1rem;
   font-size: 2rem;
@@ -95,14 +94,29 @@ ul > a > li,
   animation: zoomIn both ease-out 0.7s;
 }
 
+.wrapper {
+  position: relative;
+}
+
+.counterH3 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  z-index: 2;
+}
+
 .answersContainer {
   border-radius: 1.5rem;
   background-color: var(--dark);
-  width: 95%;
+  width: auto;
   height: auto;
   margin: 2rem;
   /* padding: 2rem; */
   opacity: 85%;
+  margin-top: 3.2rem;
 }
 
 @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
@@ -140,9 +154,6 @@ ul > a > li,
   transition-duration: 0.4s;
 }
 
-@media only screen and (max-width: 768px) {
-}
-
 /*? ANIMACIONES */
 
 @keyframes zoomIn {
@@ -156,4 +167,10 @@ ul > a > li,
   100% {
     transform: scale(1);
   }
+}
+
+/*? -- MEDIA QUERIES -- */
+
+@media onlyscreen and (max-width: 768px) {  
+  
 }

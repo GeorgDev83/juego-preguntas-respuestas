@@ -1,8 +1,8 @@
-"use strict";
+'use strict';
 
 let questionsArray = [];
 let currentQuestion = {};
-let indexPregunta = 48;
+let indexCurrentQuestion = 0;
 let counter = 0;
 
 /**
@@ -65,16 +65,18 @@ function getRandomInt(min, max) {
 /**
  * Elimina todos los hijos de un elemento HTML
  *
- * @param {Element} elemento el elemento al cual eliminar los hijos.
+ * @param {Element} elem el elemento al cual eliminar los hijos.
  */
-function removeChildsCustom(elemento) {
-  while (elemento.firstChild) {
-    elemento.removeChild(elemento.firstChild);
+function removeChildsCustom(elem) {
+  while (elem.firstChild) {
+    elem.removeChild(elem.firstChild);
   }
 }
 
 /**
  * Crea un div en al cual se le asigna el texto de la pregunta actual
+ *
+ * @param {Object} filmQuestion Pregunta con sus propiedades.
  *
  * @return {Element} elemento contenedor.
  */
@@ -93,12 +95,14 @@ function createHTMLQuestion(filmQuestion) {
  */
 function getCurrentObjectQuestionFromArray() {
   console.log("ASD: " + currentQuestion);
-  currentQuestion = questionsArray[indexPregunta];
+  currentQuestion = questionsArray[indexCurrentQuestion];
   return currentQuestion;
 }
 
 /**
  * Crea y muestra en el HTML la pregunta con sus respuestas
+ *
+ * @param {Object} filmQuestion Pregunta con sus propiedades.
  *
  */
 const printCurrentQuestion = (filmQuestion) => {
@@ -132,6 +136,8 @@ function createAnchorsAnswers(answers) {
  * Crea los anchor de las respuestas actuales
  *
  * @param {number} index indice del anchor
+ *
+ * @returns {Element} Devuelve el elemento HTML anchor creado.
  */
 function createAnchorAnswers(index) {
   const elementAnchor = document.createElement("a");
@@ -145,6 +151,8 @@ function createAnchorAnswers(index) {
  *
  * @param {number} index indice del anchor
  * @param {array} answer indice del anchor
+ * 
+ * @returns {array} contiene los li's creados. 
  */
 function createLiAnswer(index, answer) {
   const liAns = document.createElement("li");
@@ -169,21 +177,21 @@ function htmlRecovery() {
  * Verifica si la respuesta es correcta, en caso correcto incrementa el
  * contador de puntuación y lo muestra, además actualiza la interfaz.
  *
- * @param {any} Evento escuchado en el click.
+ * @param {any} ev escuchado en el click.
  */
-function checkAnswer(evento) {
-  evento.preventDefault();
+function checkAnswer(ev) {
+  ev.prevenentifier
   if (
-    extractNumericIdFromStringId(evento.target.id) ==
+    extractNumericIdFromStringId(ev.target.id) ==
     findCorrectIndexOfAnswers(currentQuestion.answers, currentQuestion.correct)
   ) {
     incrementCounter();
     printHTMLCounter();
   }
-  if (indexPregunta >= questionsArray.length - 1) {
+  if (indexCurrentQuestion >= questionsArray.length - 1) {
     gameOver();
   } else {
-    indexPregunta++;
+    indexCurrentQuestion++;
     updateUI();
   }
 }
@@ -191,6 +199,8 @@ function checkAnswer(evento) {
 /**
  * Encuentra el índice de la pregunta correcta en el array de respuestas.
  *
+ * @param {array} answers Lista de preguntas.
+ * @param {String} correctAnswer Respuesta correcta.
  * @return {number} Índice de la pregunta correcta.
  */
 function findCorrectIndexOfAnswers(answers, correctAnswer) {
@@ -205,9 +215,9 @@ function findCorrectIndexOfAnswers(answers, correctAnswer) {
  * @return {number} Índice en formato integer.
  */
 function extractNumericIdFromStringId(idString) {
-  let identificador = idString;
-  identificador = identificador.replace("li_", "");
-  return parseInt(identificador, 10);
+  let identifier = idString;
+  identifier = identifier.replace("li_", "");
+  return parseInt(identifier, 10);
 }
 
 /**
@@ -243,23 +253,61 @@ function addEventListenerCustom(lis) {
   });
 }
 
-// Funcion game Over se llama cuando acaba el juego. Limpiamos lo que
-// nos interesa de la pantalla y mostramos la puntuación total.
+/**
+ * Funcion game Over se llama cuando acaba el juego. Limpiamos lo que
+ * nos interesa de la pantalla y mostramos la puntuación total.
+ *
+ */
 function gameOver() {
+  removeGeneralContainer();
+  removeChildrenAnswerContainer();
+  createHTMLCounterH3();
+  addChildAnswerContainer();
+}
+/**
+ * Eliminamos del HTML el elemento con id "generalContainer".
+ */
+function removeGeneralContainer() {
   const questionDiv = document.querySelector("#generalContainer");
   questionDiv.remove();
+}
+/**
+ * Eliminamos del HTML los hijos del elemento con clase "answerContainer".
+ */
+function removeChildrenAnswerContainer() {
   const answerDiv = document.querySelector(".answerContainer");
   removeChildsCustom(answerDiv);
-  const answersDiv = document.querySelector(".answersContainer");
+}
+/**
+ * Modificamos del HTML el elemento con id "counter" y lo convertimos
+ * a mayúsculas.
+ */
+function createHTMLCounterH3() {
   let counterH3 = document.querySelector("#counter");
   counterH3.innerHTML = counterH3.textContent.toUpperCase();
-  console.log("GameOver");
+}
+/**
+ * Selección de un elemento h2 HTML en el cual se le introduce
+ * un texto.
+ *
+ * @returns {Element} Retorna el elemento h2.
+ */
+function createHTMLGameOverH2() {
   const gameOverH2 = document.querySelector("#gameOver");
   gameOverH2.innerHTML = "Game Over";
-  gameOverH2.style = "font-size: 4.5rem; color: whitesmoke; margin: 1rem; padding:1rem; letter-spacing: 0.5rem;";
-  answersDiv.appendChild(gameOverH2);
+  gameOverH2.style =
+    "font-size: 4.5rem; color: whitesmoke; margin: 1rem; padding:1rem; letter-spacing: 0.5rem;";
+  return gameOverH2;
 }
-
+/** 
+ * 
+ * Añade un hijo al contedor de las respuestas.
+ * 
+ */
+function addChildAnswerContainer() {
+  const answersDiv = document.querySelector(".answersContainer");
+  answersDiv.appendChild(createHTMLGameOverH2());
+}
 /**
  * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
  * pasándole como parámetro la funcion  initializa

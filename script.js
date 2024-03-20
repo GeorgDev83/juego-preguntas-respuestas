@@ -179,8 +179,12 @@ function checkAnswer(evento) {
     incrementCounter();
     printHTMLCounter();
   }
-  indexPregunta++;
-  updateUI();
+  if (indexPregunta >= questionsArray.length - 1) {
+    gameOver();
+  } else {
+    indexPregunta++;
+    updateUI();
+  }
 }
 
 /**
@@ -219,7 +223,7 @@ function incrementCounter() {
  */
 function printHTMLCounter() {
   let h3 = document.querySelector("#counter");
-  h3.innerHTML = "hits: " + counter;
+  h3.innerHTML = "Points: " + counter;
   h3.style.fontSize = "2rem";
   h3.style.color = "white";
 }
@@ -236,6 +240,18 @@ function addEventListenerCustom(lis) {
       checkAnswer(e);
     });
   });
+}
+
+// Funcion game Over se llama cuando acaba el juego. Limpiamos lo que
+// nos interesa de la pantalla y mostramos la puntuación total.
+function gameOver() {
+  const questionDiv = document.querySelector("#generalContainer");
+  questionDiv.remove();
+  const answersDiv = document.querySelector(".answersContainer");
+  removeChildsCustom(answersDiv);
+  let counterH3 = document.querySelector("#counter");
+  counterH3.innerHTML = counterH3.textContent.toUpperCase();
+  console.log("GameOver");
 }
 
 /**

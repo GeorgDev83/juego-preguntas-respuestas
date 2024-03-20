@@ -1,7 +1,7 @@
 "use strict";
 
 const objectFilmsQuest = {
-  question: null,
+  currentQuestion: null,
   questionsArray: [],
   indexPregunta: 0,
   counter: 0,
@@ -46,7 +46,7 @@ function removeChildsCustom(elemento) {
 function createHTMLQuestionH2() {
   const questionH2 = document.createElement("div");
   questionH2.className = ".questionContainer";
-  questionH2.innerHTML = objectFilmsQuest.question.question;
+  questionH2.innerHTML = objectFilmsQuest.currentQuestion.question;
   questionH2.style.fontSize = "2rem";
   return questionH2;
 }
@@ -56,12 +56,12 @@ function getCurrentObjectQuestionFromArray() {
 }
 
 const printCurrentQuestion = () => {
-  objectFilmsQuest.question = getCurrentObjectQuestionFromArray();
+  objectFilmsQuest.currentQuestion = getCurrentObjectQuestionFromArray();
   const questionH2 = createHTMLQuestionH2();
   const generalContainer = document.querySelector("#generalContainer");
   removeChildsCustom(generalContainer);
   generalContainer.appendChild(questionH2);
-  createAnchorsAnswers(objectFilmsQuest.question.answers);
+  createAnchorsAnswers(objectFilmsQuest.currentQuestion.answers);
 };
 
 function createAnchorsAnswers(answers) {
@@ -112,8 +112,8 @@ function checkAnswer(evento) {
 }
 
 function findCorrectIndexOfAnswers() {
-  return objectFilmsQuest.question.answers.findIndex((answer) =>
-    answer.includes(objectFilmsQuest.question.correct)
+  return objectFilmsQuest.currentQuestion.answers.findIndex((answer) =>
+    answer.includes(objectFilmsQuest.currentQuestion.correct)
   );
 }
 

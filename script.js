@@ -2,7 +2,7 @@
 
 let questionsArray = [];
 let currentQuestion = {};
-let indexPregunta = 0;
+let indexPregunta = 48;
 let counter = 0;
 
 /**
@@ -22,6 +22,7 @@ function initialize(questions) {
  */
 function updateUI() {
   printCurrentQuestion(getCurrentObjectQuestionFromArray());
+  printHTMLCounter();
   addEventListenerCustom(htmlRecovery());
 }
 
@@ -224,7 +225,7 @@ function incrementCounter() {
 function printHTMLCounter() {
   let h3 = document.querySelector("#counter");
   h3.innerHTML = "Points: " + counter;
-  h3.style.fontSize = "2rem";
+  h3.style.fontSize = "3rem";
   h3.style.color = "white";
 }
 
@@ -247,11 +248,16 @@ function addEventListenerCustom(lis) {
 function gameOver() {
   const questionDiv = document.querySelector("#generalContainer");
   questionDiv.remove();
+  const answerDiv = document.querySelector(".answerContainer");
+  removeChildsCustom(answerDiv);
   const answersDiv = document.querySelector(".answersContainer");
-  removeChildsCustom(answersDiv);
   let counterH3 = document.querySelector("#counter");
   counterH3.innerHTML = counterH3.textContent.toUpperCase();
   console.log("GameOver");
+  const gameOverH2 = document.querySelector("#gameOver");
+  gameOverH2.innerHTML = "Game Over";
+  gameOverH2.style = "font-size: 4.5rem; color: whitesmoke; margin: 1rem; padding:1rem; letter-spacing: 0.5rem;";
+  answersDiv.appendChild(gameOverH2);
 }
 
 /**

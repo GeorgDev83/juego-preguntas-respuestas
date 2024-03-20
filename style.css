@@ -6,14 +6,17 @@
   font-family: "Roboto", sans-serif;
 }
 
-/*! cambiar nombres de colores al inglés */
+/*? COLORES */
+
 :root {
-  --oscuro: #011526;
-  --azul-oscuro: #4D3273;
-  --azul: #B35ABF;
-  --azul-claro: #F29BEC;
-  --azul-verdoso: #F2CEF2;
+  --dark: #011526;
+  --dark-violet: #4d3273;
+  --violet: #b35abf;
+  --violet-light: #f29bec;
+  --violet-lighter: #f2cef2;
 }
+
+/*? -- ESTILOS BODY -- */
 
 body {
   display: flex;
@@ -23,13 +26,15 @@ body {
   flex-direction: column;
   height: 100vh;
   width: 100vw;
-  background-color: var(--oscuro);
+  background-color: var(--dark);
   user-select: none;
   background-image: url(img/fondo.jpeg);
   background-repeat: no-repeat;
-  background-size:cover;
+  background-size: cover;
   background-position: center;
 }
+
+/*? -- ESTILOS H1 -- */
 
 h1 {
   font-size: 5rem;
@@ -37,14 +42,13 @@ h1 {
   font-weight: 900;
   letter-spacing: 0.3rem;
   padding: 3rem;
-  color:transparent;
+  color: transparent;
   /* text-shadow: 1px 1px 2px white; */
   background-image: url(img/5.png);
   background-size: cover;
   background-position: center;
   /* background-position-y: -40px; */
   background-clip: text;
-  -webkit-background-clip: text;
   /* opacity: 75%; */
 }
 
@@ -65,25 +69,23 @@ li {
   text-decoration: none;
 }
 
-a{
+a {
   margin-left: 2rem;
 }
 
 ul > a > li,
 .li__answer {
-  /*display: block;*/ 
+  /*display: block;*/
   width: 90%;
   font-size: 1.8rem;
   font-weight: bold;
   cursor: pointer;
-  color: var(--oscuro);
+  color: var(--dark);
 }
-
-
 
 #generalContainer {
   position: relative;
-  background-color: var(--azul-oscuro);
+  background-color: var(--dark-violet);
   padding: 2rem;
   margin: 0 2rem 2rem 2rem;
   border-radius: 1rem;
@@ -95,7 +97,7 @@ ul > a > li,
 
 .answersContainer {
   border-radius: 1.5rem;
-  background-color: var(--oscuro);
+  background-color: var(--dark);
   width: 95%;
   height: auto;
   margin: 2rem;
@@ -109,7 +111,7 @@ ul > a > li,
     display: inline-block;
     width: 3rem;
     height: 3rem;
-    background-color: var(--azul-oscuro);
+    background-color: var(--dark-violet);
     position: absolute;
     bottom: -2.7rem;
     left: calc(50% - 0.5rem);
@@ -118,19 +120,17 @@ ul > a > li,
 }
 
 .li__answer:nth-child(even) {
-  background-color: var(--azul-claro);
-  
+  background-color: var(--violet-light);
 }
 
 .li__answer:nth-child(odd) {
-  background-color: var(--azul);
+  background-color: var(--violet);
 }
 
 .li__answer:hover {
-  background-color: var(--azul-oscuro);
+  background-color: var(--dark-violet);
   transition-duration: 0.4s;
 }
-
 
 .style--a {
   margin: 2rem;

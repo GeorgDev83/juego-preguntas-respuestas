@@ -1,10 +1,19 @@
 /*! -- RESET -- */
-* {
-  padding: 0px;
-  margin: 0px;
-  font-size: 10px;
-  box-sizing: border-box;
-  font-family: "Roboto", sans-serif;
+/* Reseteo de todos los valores de los elementos por defecto */
+*,
+*::after,
+::before {
+  margin: 0; /* Resetedo de margin */
+  padding: 0; /* Resetedo de padding */
+  box-sizing: inherit; /* Hereda box-sizing de elementos padre */
+}
+
+/* Setting base styles for HTML */
+html {
+  /* valor del tamaño de la fuente por defecto del navegador es de 16px */
+  font-size: 62.5%; /* Trabajar con 1 rem = 10px (font-size=10px) (62.5% * 16px = 10px) */
+  box-sizing: border-box; /* Setea box-sizing a border-box */
+  font-family: 'Roboto', sans-serif;
 }
 
 /*? -- COLORES -- */
@@ -20,15 +29,15 @@
 /*? -- ESTILOS BODY -- */
 
 body {
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
-  text-align: center;
+  align-items: center; */
+  text-align: center; 
   flex-direction: column;
-  overflow: auto;
+  overflow: hidden;
   height: 100vh;
   width: 100vw;
-  margin: auto;
+  /* margin: auto; */
   background-color: var(--dark);
   user-select: none;
   background-image: url(img/fondo.jpeg);
@@ -44,8 +53,10 @@ h1 {
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: 0.3rem;
-  padding-bottom: 3rem;
-  min-width: 100%;
+  /* padding-bottom: 3rem; */
+  min-width: 90%;
+  margin: 1rem;
+  margin-bottom: 5rem;
   color: transparent;
   background-image: url(img/Diseno_sin_titulo.png);
   background-size: cover;
@@ -53,55 +64,97 @@ h1 {
   background-attachment: fixed;
   background-clip: text;
   position: sticky;
-  top: 0;
+  top: 0rem;
   z-index: 3;
-}
-
-ul {
-  width: auto;
-  margin: 0 auto;
-  width: 100%;
-  list-style: none;
-}
-
-li {
-  margin: 0.5rem auto;
-  text-align: center;
-  padding: 1.5rem;
-  border: 2px solid black;
-  border-radius: 1.5rem;
-  width: 75vw;
-  text-decoration: none;
-}
-
-a {
-  margin-left: 2rem;
-}
-
-ul > a > li,
-.li__answer {
-  /*display: block;*/
-  width: 90%;
-  font-size: 1.8rem;
-  font-weight: bold;
-  cursor: pointer;
-  color: var(--dark);
 }
 
 #generalContainer {
   background-color: var(--dark-violet);
+  text-align:center ;
   padding: 1rem;
-  margin: 0 2rem 2rem 2rem;
+  margin: 0 2rem 3rem 2rem ;
+  
   border-radius: 1rem;
-  font-size: 2rem;
+  /* font-size: 2rem; */
   color: whitesmoke;
   text-shadow: 2px 2px 4px black;
   animation: zoomIn both ease-out 0.7s;
 }
 
-.wrapper {
-  position: relative;
+.questionContainer {
+  font-size: 1.8rem;
+  padding: 0.8rem;
 }
+
+.answersContainer {
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* display: inline-block;
+  justify-content: center;
+  align-items: center;
+  text-align: center; */
+  /* border-radius: 1.5rem; */
+  /* background-color: var(--dark); */
+  width: 100%;
+  opacity: 85%;
+  /* height: auto; */
+  /* margin: 2rem;
+  margin-left: 20rem;
+  margin-right: 20rem;
+  padding: 2rem;
+  
+  margin-top: 3.2rem; */
+}
+
+ul {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 85%;
+  padding: 1rem 1rem;
+  /* margin: 0 auto; */
+  list-style: none;
+  border-radius: 1.5rem;
+  background-color: var(--dark);
+}
+
+/* li {
+   margin: 0.5rem auto; 
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 1.5rem;
+  min-width: 80%;
+  padding: 1.5rem;
+  margin: 0.6rem 0rem 0.6rem 0rem;
+  text-decoration: none;
+} */
+
+
+.li__answer {
+  /*display: block;*/
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 1.5rem;
+  min-width: 80%;
+  padding: 1.5rem;
+  margin: 0.6rem 0rem 0.6rem 0rem;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: var(--dark);
+  font-size: 1.6rem;
+}
+
+
+
+/* .wrapper {
+  position: relative;
+} */
 
 .counterH3 {
   display: flex;
@@ -114,16 +167,7 @@ ul > a > li,
   bottom: 0;
 }
 
-.answersContainer {
-  border-radius: 1.5rem;
-  background-color: var(--dark);
-  width: auto;
-  height: auto;
-  margin: 2rem;
-  padding: 2rem;
-  opacity: 85%;
-  margin-top: 3.2rem;
-}
+
 
 @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
   #generalContainer::after {
@@ -157,6 +201,17 @@ ul > a > li,
   margin: 2rem;
 }
 
+#gameOver {
+  
+  width: 100%;
+  text-align: center;
+  font-size: 4.5rem;
+  color: whitesmoke;
+  margin: 1rem;
+  padding:1rem; 
+  letter-spacing: 0.5rem;
+}
+
 /*? ANIMACIONES */
 
 @keyframes zoomIn {
@@ -178,11 +233,28 @@ ul > a > li,
   
 } */
 
-@media (orientation: landscape) and (max-width: 768px) {
-  ul > a > li,
+/* @media  (max-width: 768px) {
+  ul > li,
   .li__answer {
-    padding: 0.7rem;
-    margin: 0 auto;
+    
+    display: flex;
+    width: 90%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    
+    padding-left: 1rem;
+    padding-right: 1rem;
+    font-size: 1rem;
+  }
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .questionContainer{
     font-size: 1rem;
   }
 
@@ -190,10 +262,52 @@ ul > a > li,
     position: sticky;
     bottom: 0;
   }
+  .answersContainer{
+    height: 60%;
+  }
+} */
+
+
+
+@media (orientation: landscape) and (min-width: 768px) and (max-width: 1024px) {
+  ul > li,
+  .li__answer {
+    padding: 0.7rem;
+    /* margin: 0 auto; */
+    font-size: 1rem;
+  }
+  .questionContainer{
+    font-size: 2rem;
+  }
+  
+  .counterH3 {
+    position: sticky;
+    bottom: 0;
+  }
 }
 
-@media (orientation: portrait) and (max-width: 768px) {
-  /* body {
-    flex-direction: column;
-  } */
+@media (orientation: portrait) and (min-width: 768px) {
+h1 {
+  font-size: 10rem; 
+}
+.questionContainer{
+  font-size: 3rem;
+}
+}
+
+@media (orientation: landscape) and (min-width:1024px){
+  
+
+  h1 {
+    font-size: 10rem;
+  }
+  .questionContainer {
+    
+    font-size: 3rem;
+  }
+
+  .counterH3 {
+    position: sticky;
+    bottom: 0;
+  }
 }

@@ -81,10 +81,9 @@ function removeChildsCustom(elem) {
  * @return {Element} elemento contenedor.
  */
 function createHTMLQuestion(filmQuestion) {
-  const elementQuestion = document.createElement("div");
-  elementQuestion.className = ".questionContainer";
+  const elementQuestion = document.querySelector(".questionContainer");
   elementQuestion.innerHTML = filmQuestion.question;
-  elementQuestion.style = `font-size: 1.5rem;`;
+  
   return elementQuestion;
 }
 
@@ -301,8 +300,7 @@ function createHTMLCounterH3() {
 function createHTMLGameOverH2() {
   const gameOverH2 = document.querySelector("#gameOver");
   gameOverH2.innerHTML = "Game Over";
-  gameOverH2.style =
-    "font-size: 4.5rem; color: whitesmoke; margin: 1rem; padding:1rem; letter-spacing: 0.5rem;";
+    
   return gameOverH2;
 }
 /**

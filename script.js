@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
 let questionsArray = [];
 let currentQuestion = {};
-let indexCurrentQuestion = 0;
+let indexCurrentQuestion = 48;
 let counter = 0;
 
 /**
@@ -84,7 +84,7 @@ function createHTMLQuestion(filmQuestion) {
   const elementQuestion = document.createElement("div");
   elementQuestion.className = ".questionContainer";
   elementQuestion.innerHTML = filmQuestion.question;
-  elementQuestion.style.fontSize = "2rem";
+  elementQuestion.style = `font-size: 1.5rem;`;
   return elementQuestion;
 }
 
@@ -111,7 +111,14 @@ const printCurrentQuestion = (filmQuestion) => {
   const generalContainer = document.querySelector("#generalContainer");
   removeChildsCustom(generalContainer);
   generalContainer.appendChild(elementQuestion);
-  createAnchorsAnswers(filmQuestion.answers);
+  // createAnchorsAnswers(filmQuestion.answers);
+  let lis;
+  const answersUl = document.querySelector(".answerContainer");
+  removeChildsCustom(answersUl);
+  for (let index = 0; index < filmQuestion.answers.length; index++) {
+    lis = createLiAnswer(index, filmQuestion.answers);
+    answersUl.appendChild(lis);
+  }
 };
 
 /**
@@ -127,8 +134,8 @@ function createAnchorsAnswers(answers) {
   for (let index = 0; index < answers.length; index++) {
     const elementsLi = createLiAnswer(index, answers[index]);
     const elementAnchor = createAnchorAnswers(index);
-    elementAnchor.appendChild(elementsLi);
-    answersUl.appendChild(elementAnchor);
+    elementsLi.appendChild(elementAnchor);
+    answersUl.appendChild(elementsLi);
   }
 }
 
@@ -151,15 +158,14 @@ function createAnchorAnswers(index) {
  *
  * @param {number} index indice del anchor
  * @param {array} answer indice del anchor
- * 
- * @returns {array} contiene los li's creados. 
+ *
+ * @returns {array} contiene los li's creados.
  */
 function createLiAnswer(index, answer) {
   const liAns = document.createElement("li");
   liAns.id = "li_" + index;
   liAns.className = "li__answer";
-  liAns.innerText = answer;
-  liAns.href = "#";
+  liAns.innerText = answer[index];
 
   return liAns;
 }
@@ -180,7 +186,7 @@ function htmlRecovery() {
  * @param {any} ev escuchado en el click.
  */
 function checkAnswer(ev) {
-  ev.prevenentifier
+  ev.prevenentifier;
   if (
     extractNumericIdFromStringId(ev.target.id) ==
     findCorrectIndexOfAnswers(currentQuestion.answers, currentQuestion.correct)
@@ -299,10 +305,10 @@ function createHTMLGameOverH2() {
     "font-size: 4.5rem; color: whitesmoke; margin: 1rem; padding:1rem; letter-spacing: 0.5rem;";
   return gameOverH2;
 }
-/** 
- * 
+/**
+ *
  * Añade un hijo al contedor de las respuestas.
- * 
+ *
  */
 function addChildAnswerContainer() {
   const answersDiv = document.querySelector(".answersContainer");

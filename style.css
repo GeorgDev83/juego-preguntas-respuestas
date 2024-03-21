@@ -1,3 +1,4 @@
+/*! -- RESET -- */
 * {
   padding: 0px;
   margin: 0px;
@@ -6,7 +7,7 @@
   font-family: "Roboto", sans-serif;
 }
 
-/*? COLORES */
+/*? -- COLORES -- */
 
 :root {
   --dark: #011526;
@@ -24,8 +25,10 @@ body {
   align-items: center;
   text-align: center;
   flex-direction: column;
+  overflow: auto;
   height: 100vh;
   width: 100vw;
+  margin: auto;
   background-color: var(--dark);
   user-select: none;
   background-image: url(img/fondo.jpeg);
@@ -41,15 +44,17 @@ h1 {
   text-transform: uppercase;
   font-weight: 900;
   letter-spacing: 0.3rem;
-  padding: 3rem;
+  padding-bottom: 3rem;
+  min-width: 100%;
   color: transparent;
-  /* text-shadow: 1px 1px 2px white; */
   background-image: url(img/Diseno_sin_titulo.png);
   background-size: cover;
   background-position: center;
-  /* background-position-y: -40px; */
+  background-attachment: fixed;
   background-clip: text;
-  /* opacity: 75%; */
+  position: sticky;
+  top: 0;
+  z-index: 3;
 }
 
 ul {
@@ -104,8 +109,9 @@ ul > a > li,
   align-items: center;
   width: 100%;
   text-align: center;
-  position: absolute;
   z-index: 2;
+  position: sticky;
+  bottom: 0;
 }
 
 .answersContainer {
@@ -114,7 +120,7 @@ ul > a > li,
   width: auto;
   height: auto;
   margin: 2rem;
-  /* padding: 2rem; */
+  padding: 2rem;
   opacity: 85%;
   margin-top: 3.2rem;
 }
@@ -143,15 +149,12 @@ ul > a > li,
 
 .li__answer:hover {
   background-color: var(--dark-violet);
+  color: antiquewhite;
   transition-duration: 0.4s;
 }
 
 .style--a {
   margin: 2rem;
-}
-.style--a > li:hover {
-  color: antiquewhite;
-  transition-duration: 0.4s;
 }
 
 /*? ANIMACIONES */
@@ -171,6 +174,26 @@ ul > a > li,
 
 /*? -- MEDIA QUERIES -- */
 
-@media onlyscreen and (max-width: 768px) {  
+/* @media onlyscreen and (max-width: 768px) {  
   
+} */
+
+@media (orientation: landscape) and (max-width: 768px) {
+  ul > a > li,
+  .li__answer {
+    padding: 0.7rem;
+    margin: 0 auto;
+    font-size: 1rem;
+  }
+
+  .counterH3 {
+    position: sticky;
+    bottom: 0;
+  }
+}
+
+@media (orientation: portrait) and (max-width: 768px) {
+  /* body {
+    flex-direction: column;
+  } */
 }

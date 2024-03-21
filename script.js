@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 let questionsArray = [];
 let currentQuestion = {};
@@ -42,7 +42,7 @@ function setRandomArray(array) {
  */
 const doFetch = async (initializeCb) => {
   const urlFetch =
-    "https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json";
+    'https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json';
   await fetch(urlFetch)
     .then((res) => res.json())
     .then((questions) => initializeCb(questions))
@@ -81,9 +81,9 @@ function removeChildsCustom(elem) {
  * @return {Element} elemento contenedor.
  */
 function createHTMLQuestion(filmQuestion) {
-  const elementQuestion = document.querySelector(".questionContainer");
+  const elementQuestion = document.querySelector('.questionContainer');
   elementQuestion.innerHTML = filmQuestion.question;
-  
+
   return elementQuestion;
 }
 
@@ -93,7 +93,6 @@ function createHTMLQuestion(filmQuestion) {
  * @return {Object} objeto de la pregunta actual.
  */
 function getCurrentObjectQuestionFromArray() {
-  console.log("ASD: " + currentQuestion);
   currentQuestion = questionsArray[indexCurrentQuestion];
   return currentQuestion;
 }
@@ -105,14 +104,13 @@ function getCurrentObjectQuestionFromArray() {
  *
  */
 const printCurrentQuestion = (filmQuestion) => {
-  console.log(filmQuestion);
   const elementQuestion = createHTMLQuestion(filmQuestion);
-  const generalContainer = document.querySelector("#generalContainer");
-  removeChildsCustom(generalContainer);
-  generalContainer.appendChild(elementQuestion);
+  const questionSection = document.querySelector('.question');
+  removeChildsCustom(questionSection);
+  questionSection.appendChild(elementQuestion);
   // createAnchorsAnswers(filmQuestion.answers);
   let lis;
-  const answersUl = document.querySelector(".answerContainer");
+  const answersUl = document.querySelector('.answersUl');
   removeChildsCustom(answersUl);
   for (let index = 0; index < filmQuestion.answers.length; index++) {
     lis = createLiAnswer(index, filmQuestion.answers);
@@ -126,7 +124,7 @@ const printCurrentQuestion = (filmQuestion) => {
  * @param {array} answers Preguntas
  */
 function createAnchorsAnswers(answers) {
-  const answersUl = document.querySelector(".answerContainer");
+  const answersUl = document.querySelector('.answerContainer');
   removeChildsCustom(answersUl);
 
   setRandomArray(answers);
@@ -146,9 +144,9 @@ function createAnchorsAnswers(answers) {
  * @returns {Element} Devuelve el elemento HTML anchor creado.
  */
 function createAnchorAnswers(index) {
-  const elementAnchor = document.createElement("a");
-  elementAnchor.id = "a_" + index;
-  elementAnchor.className = "style--a";
+  const elementAnchor = document.createElement('a');
+  elementAnchor.id = 'a_' + index;
+  elementAnchor.className = 'style--a';
   return elementAnchor;
 }
 
@@ -161,9 +159,9 @@ function createAnchorAnswers(index) {
  * @returns {array} contiene los li's creados.
  */
 function createLiAnswer(index, answer) {
-  const liAns = document.createElement("li");
-  liAns.id = "li_" + index;
-  liAns.className = "li__answer";
+  const liAns = document.createElement('li');
+  liAns.id = 'li_' + index;
+  liAns.className = 'li__answer';
   liAns.innerText = answer[index];
 
   return liAns;
@@ -175,7 +173,7 @@ function createLiAnswer(index, answer) {
  * @return {array} elementos li del html que tengan la clase ".li__answer".
  */
 function htmlRecovery() {
-  return document.querySelectorAll(".li__answer");
+  return document.querySelectorAll('.li__answer');
 }
 
 /**
@@ -221,7 +219,7 @@ function findCorrectIndexOfAnswers(answers, correctAnswer) {
  */
 function extractNumericIdFromStringId(idString) {
   let identifier = idString;
-  identifier = identifier.replace("li_", "");
+  identifier = identifier.replace('li_', '');
   return parseInt(identifier, 10);
 }
 
@@ -238,10 +236,10 @@ function incrementCounter() {
  *
  */
 function printHTMLCounter() {
-  let h3 = document.querySelector("#counter");
-  h3.innerHTML = "Points: " + counter;
-  h3.style.fontSize = "3rem";
-  h3.style.color = "white";
+  let h3 = document.querySelector('#count');
+  h3.innerHTML = 'Points: ' + counter;
+  h3.style.fontSize = '3rem';
+  h3.style.color = 'white';
 }
 
 /**
@@ -252,7 +250,7 @@ function printHTMLCounter() {
  */
 function addEventListenerCustom(lis) {
   lis.forEach((element) => {
-    element.addEventListener("click", function (e) {
+    element.addEventListener('click', function (e) {
       checkAnswer(e);
     });
   });
@@ -264,31 +262,32 @@ function addEventListenerCustom(lis) {
  *
  */
 function gameOver() {
-  removeGeneralContainer();
+  removeQuestionSection();
   removeChildrenAnswerContainer();
   createHTMLCounterH3();
-  addChildAnswerContainer();
+  /* addGameOverAnswerContainer(); */
+  createHTMLGameOverH2();
 }
 /**
  * Eliminamos del HTML el elemento con id "generalContainer".
  */
-function removeGeneralContainer() {
-  const questionDiv = document.querySelector("#generalContainer");
-  questionDiv.remove();
+function removeQuestionSection() {
+  const questionSection = document.querySelector('.question');
+  questionSection.remove();
 }
 /**
  * Eliminamos del HTML los hijos del elemento con clase "answerContainer".
  */
 function removeChildrenAnswerContainer() {
-  const answerDiv = document.querySelector(".answerContainer");
-  removeChildsCustom(answerDiv);
+  const answersSection = document.querySelector('.answers');
+  answersSection.remove();
 }
 /**
  * Modificamos del HTML el elemento con id "counter" y lo convertimos
  * a mayúsculas.
  */
 function createHTMLCounterH3() {
-  let counterH3 = document.querySelector("#counter");
+  let counterH3 = document.querySelector('#count');
   counterH3.innerHTML = counterH3.textContent.toUpperCase();
 }
 /**
@@ -298,9 +297,9 @@ function createHTMLCounterH3() {
  * @returns {Element} Retorna el elemento h2.
  */
 function createHTMLGameOverH2() {
-  const gameOverH2 = document.querySelector("#gameOver");
-  gameOverH2.innerHTML = "Game Over";
-    
+  const gameOverH2 = document.querySelector('#gameOver');
+  gameOverH2.innerHTML = 'Game Over';
+
   return gameOverH2;
 }
 /**
@@ -308,13 +307,13 @@ function createHTMLGameOverH2() {
  * Añade un hijo al contedor de las respuestas.
  *
  */
-function addChildAnswerContainer() {
-  const answersDiv = document.querySelector(".answersContainer");
-  answersDiv.appendChild(createHTMLGameOverH2());
+function addGameOverAnswerContainer() {
+  const answersSection = document.querySelector('.answers');
+  answersSection.appendChild(createHTMLGameOverH2());
 }
 /**
  * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
  * pasándole como parámetro la funcion  initializa
  *
  */
-document.addEventListener("DOMContentLoaded", doFetch(initialize));
+document.addEventListener('DOMContentLoaded', doFetch(initialize));

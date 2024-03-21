@@ -2,8 +2,9 @@
 
 let questionsArray = [];
 let currentQuestion = {};
-let indexCurrentQuestion = 48;
+let indexCurrentQuestion = 0;
 let counter = 0;
+const passed = 20;
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -300,6 +301,11 @@ function createHTMLGameOverH2() {
   const gameOverH2 = document.querySelector('#gameOverId');
   console.log(gameOverH2);
   gameOverH2.className = 'gameOver';
+  if (counter <= passed) {
+    gameOverH2.style.color = 'red';
+  } else if (counter > passed) {
+    gameOverH2.style.color = 'green';
+  }
   gameOverH2.style.visibility = 'visible';
   gameOverH2.innerHTML = 'Game Over';
 

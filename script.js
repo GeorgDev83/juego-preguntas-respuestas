@@ -297,7 +297,10 @@ function createHTMLCounterH3() {
  * @returns {Element} Retorna el elemento h2.
  */
 function createHTMLGameOverH2() {
-  const gameOverH2 = document.querySelector('#gameOver');
+  const gameOverH2 = document.querySelector('#gameOverId');
+  console.log(gameOverH2);
+  gameOverH2.className = 'gameOver';
+  gameOverH2.style.visibility = 'visible';
   gameOverH2.innerHTML = 'Game Over';
 
   return gameOverH2;

@@ -26,35 +26,35 @@ html {
   --violet-lighter: #f2cef2;
 }
 
-/*? -- ESTILOS BODY -- */
+/*? -- ESTILOS MAIN -- */
 
 body {
-  height: 100vh;
-  background-color: var(--dark);
-  user-select: none;
-  background-image: url(img/fondo.jpeg);
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
+  height: 100%;
 }
 
 #main-container {
   height: 100%;
   display: grid;
-  grid-template-areas: 
-  'header'
-  'question'
-  'answers'
-  'gameOver'
-  'footer';
+  grid-template-areas:
+    "header"
+    "question"
+    "answers"
+    "gameOver"
+    "footer";
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+  background-color: var(--dark);
+  user-select: none;
+  background-image: url('img/descarga\ \(3\).jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
-.header{
+.header {
   grid-area: header;
   text-align: center;
-  font-size: 2rem;
+  font-size: 3.5rem;
   text-transform: uppercase;
   text-shadow: 1rem 1rem 3rem rgba(255, 255, 255, 0.2);
   -webkit-text-stroke: 1px black;
@@ -69,21 +69,19 @@ body {
 
   margin: 1rem;
   padding: 0.5rem;
-
 }
 
-.main{
+.main {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  justify-content: center; 
-
+  justify-content: center;
 }
 
-.question{
+.question {
   grid-area: question;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   letter-spacing: 4px;
   background-color: var(--dark-violet);
   text-align: center;
@@ -91,7 +89,7 @@ body {
   font-weight: bold;
   margin: 0rem 2rem 0rem 2rem;
   padding: 0.8rem;
-  
+
   border-radius: 1rem;
   color: whitesmoke;
   text-shadow: 2px 2px 4px black;
@@ -125,9 +123,9 @@ body {
   transition-duration: 0.4s;
 }
 
-#answers{
+#answers {
   grid-area: answers;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   /* display: flex;
   justify-content: center;
   align-content: flex-end; */
@@ -136,21 +134,20 @@ body {
   margin: 3rem 0 0 0;
 }
 
-ul.answersUl{
+ul.answersUl {
   display: flex;
   text-align: center;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   /*!Anadir una clase al elemento gameOver con min-width y padding*/
-   /* margin: 0 auto;  */
+  /* margin: 0 auto;  */
   list-style: none;
   border-radius: 1.5rem;
   background-color: var(--dark);
   color: whitesmoke;
   padding: 2rem 0;
 }
-
 
 .gameOver {
   grid-area: gameOver;
@@ -172,15 +169,12 @@ ul.answersUl{
 footer {
   grid-area: footer;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: 3rem;
   color: whitesmoke;
 }
-
-
-
 
 @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
   .question::after {
@@ -195,7 +189,6 @@ footer {
     clip-path: polygon(0 0, 100% 0, 100% 100%);
   }
 }
-
 
 /*? ANIMACIONES */
 
@@ -214,30 +207,33 @@ footer {
 
 /*? -- MEDIA QUERIES -- */
 @media ((orientation: portrait) or (orientation: landscape)) and (min-width: 768px) {
-.header {
-  font-size: 6rem; 
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.question{
-  font-size: 3rem;
-  font-weight: bold;
-}
+  .header {
+    font-size: 6rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .question {
+    font-size: 3rem;
+    font-weight: bold;
+  }
 }
 
-@media ((orientation: portrait) or (orientation: landscape)) and (min-width:1024px){
+@media ((orientation: portrait) or (orientation: landscape)) and (min-width: 1024px) {
   #answers {
     max-width: 65%;
-  }  
+  }
+
+#main-container {
+  height: 150vh;
+}
 
   .header {
     font-size: 8rem;
     font-weight: bold;
   }
   .question {
-    
     font-size: 3rem;
     font-weight: bold;
   }

@@ -16,18 +16,15 @@ class Question {
   }
 
   get indexCurrentQuestion() {
-    console.log('index = ', this._indexCurrentQuestion);
     return this._indexCurrentQuestion;
   }
   /**
    * @param {number} index
    */
   set indexCurrentQuestion(value) {
-    /* if (index < 0)
+    if (value < 0)
       throw new Error('El índice de pregunta debe ser igual o mayor a 0.');
-    else*/
-    console.log(value);
-    this._indexCurrentQuestion = value;
+    else this._indexCurrentQuestion = value;
   }
 
   isCorrect(id) {
@@ -56,7 +53,7 @@ let questionsArray = [];
  * en relación con el objeto pregunta actual
  *
  */
-const currentQuestion = new Question({}, [], 0, 0, 20);
+const currentQuestion = new Question({}, [], 48, 0, 20);
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -218,9 +215,7 @@ function htmlRecovery() {
  */
 function checkAnswer(ev) {
   ev.preventDefault();
-
   const idHTML = extractNumericIdFromStringId(ev.target.id);
-  console.log(idHTML);
   if (currentQuestion.isCorrect(idHTML)) {
     currentQuestion.incrementCounter();
     printHTMLCounter();
@@ -304,7 +299,7 @@ function removeQuestionSection() {
  * Eliminamos del HTML los hijos del elemento con clase "answerContainer".
  */
 function removeChildrenAnswerContainer() {
-  const answersSection = document.querySelector('.answers');
+  const answersSection = document.querySelector('#answers');
   answersSection.remove();
 }
 /**
@@ -322,6 +317,7 @@ function createHTMLCounterH3() {
  * @returns {Element} Retorna el elemento h2.
  */
 function createHTMLGameOverH2() {
+  pararTemporizador();
   const gameOverH2 = document.querySelector('#gameOverId');
   console.log(gameOverH2);
   gameOverH2.className = 'gameOver';
@@ -336,26 +332,25 @@ function createHTMLGameOverH2() {
   return gameOverH2;
 }
 
-
 let crono = 0;
 const intervalId = setInterval(() => {
   crono++;
   insertTimerHTML();
 }, 1000);
 
-const pararTemporizador = (segundos) => {
+const pararTemporizador = () => {
   setTimeout(() => {
     clearInterval(intervalId);
-    console.log("Se paró");
-  }, segundos * 1000);
+  }, 0);
 };
-function insertTimerHTML () {
-  const timerH3 = document.querySelector('#timer'); 
-  const minutes = Math.floor (crono/60);
-  const seconds = crono%60;
-  timerH3.innerHTML =(`${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`);
+function insertTimerHTML() {
+  const timerH3 = document.querySelector('#timer');
+  const minutes = Math.floor(crono / 60);
+  const seconds = crono % 60;
+  timerH3.innerHTML = `${minutes < 10 ? '0' + minutes : minutes} : ${
+    seconds < 10 ? '0' + seconds : seconds
+  }`;
 }
-
 
 /**
  * Añadimos al evento DOMContentLoaded la llamada a la función doFetch

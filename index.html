@@ -4,31 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>🎬Film Quiz🎥</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&display=swap" rel="stylesheet" />
     <link rel="icon" type="image/ico" href="img/images.ico" />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <header class="header">
-      <h1>Film Quiz</h1>
-    </header>
-    <main class="main">
-      <section class="question">
-        <div class="questionContainer"></div>
-      </section>
-      <section class="answers">
-        <ul class="answersUl"></ul>
-      </section>
-      <section class="gameOver">
-        <h2 id="gameOverId"></h2>
-      </section>
-    </main>
-    <footer>
-      <h3 id="count"></h3>
-      <h3 id="timer"></h3>
-    </footer>
+    <div id="main-container">
+      <header class="header">
+        <h1>Film Quiz</h1>
+      </header>
+      <main class="main">
+        <section class="question">
+          <div class="questionContainer"></div>
+        </section>
+        <section id="answers">
+          <ul class="answersUl"></ul>
+        </section>
+        <section class="gameOver">
+          <h2 id="gameOverId"></h2>
+        </section>
+      </main>
+      <footer>
+        <h3 id="count"></h3>
+        <h3 id="timer">00 : 00</h3>
+      </footer>
+    </div>
     <script src="script.js"></script>
   </body>
 </html>

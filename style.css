@@ -18,8 +18,6 @@ html {
   font-style: normal;
 }
 
-/*? -- COLORES -- */
-
 :root {
   --dark: #011526;
   --dark-violet: #4d3273;
@@ -31,14 +29,17 @@ html {
 /*? -- ESTILOS BODY -- */
 
 body {
-  height: 120vh;
+  height: 100vh;
   background-color: var(--dark);
   user-select: none;
   background-image: url(img/fondo.jpeg);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+}
 
+#main-container {
+  height: 100%;
   display: grid;
   grid-template-areas: 
   'header'
@@ -47,7 +48,7 @@ body {
   'gameOver'
   'footer';
   grid-template-columns: 1fr;
-  grid-template-rows: 10vh 10vh 80vh 0 10vh ;
+  grid-template-rows: auto;
 }
 
 .header{
@@ -66,8 +67,8 @@ body {
   background-attachment: fixed;
   background-clip: text;
 
-  /* margin: 1rem;
-  padding: 0.5rem; */
+  margin: 1rem;
+  padding: 0.5rem;
 
 }
 
@@ -87,8 +88,9 @@ body {
   background-color: var(--dark-violet);
   text-align: center;
   font-size: 1.8rem;
-  /* margin: 8rem 2rem 0rem 2rem;
-  padding: 0.8rem; */
+  font-weight: bold;
+  margin: 0rem 2rem 0rem 2rem;
+  padding: 0.8rem;
   
   border-radius: 1rem;
   color: whitesmoke;
@@ -96,41 +98,9 @@ body {
   animation: zoomIn both ease-out 0.7s;
 }
 
-ul {
-  
-  display: flex;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-width: 80%; 
-  padding: 1rem 1rem; 
-  /*!Anadir una clase al elemento gameOver con min-width y padding*/
-   /* margin: 0 auto;  */
-  list-style: none;
-  border-radius: 1.5rem;
-  background-color: var(--dark);
-  color: whitesmoke;
-}
-
-.answers{
-  grid-area: answers;
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-content: flex-end;
-  width: 100%;
-  opacity: 85%;
-  margin: 1rem 0 0 0;
-}
-
-.answersUl{
-  
-}
 .li__answer {
   border: 2px solid black;
   border-radius: 1.5rem;
-  max-width: 80%;
   min-width: 80%;
   padding: 1.5rem;
   margin: 0.6rem 0rem 0.6rem 0rem;
@@ -154,18 +124,52 @@ ul {
   color: antiquewhite;
   transition-duration: 0.4s;
 }
+
+#answers{
+  grid-area: answers;
+  font-family: 'Roboto', sans-serif;
+  /* display: flex;
+  justify-content: center;
+  align-content: flex-end; */
+  width: 80%;
+  opacity: 0.85;
+  margin: 3rem 0 0 0;
+}
+
+ul.answersUl{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /*!Anadir una clase al elemento gameOver con min-width y padding*/
+   /* margin: 0 auto;  */
+  list-style: none;
+  border-radius: 1.5rem;
+  background-color: var(--dark);
+  color: whitesmoke;
+  padding: 2rem 0;
+}
+
+
 .gameOver {
   grid-area: gameOver;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
   /* padding: 8rem 0 8rem 0; */
   opacity: 97%;
   width: 75%;
   max-width: 75%;
   font-size: 4.5rem;
   visibility: hidden;
+  border-radius: 1.5rem;
+  background-color: var(--dark);
+  color: whitesmoke;
 }
 
 footer {
-
   grid-area: footer;
   display: flex;
   flex-direction:column;
@@ -224,7 +228,9 @@ footer {
 }
 
 @media ((orientation: portrait) or (orientation: landscape)) and (min-width:1024px){
-  
+  #answers {
+    max-width: 65%;
+  }  
 
   .header {
     font-size: 8rem;

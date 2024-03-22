@@ -2,11 +2,30 @@
 
 let questionsArray = [];
 
+/**
+ * Objeto currentQuestion que guarda variables y funciones
+ * en relación con el objeto pregunta actual
+ *
+ */
 const currentQuestion = {
   question: {},
+  isCorrect: function (id) {
+    return id === this.correctId();
+  },
+  correctId: function () {
+    return this.answersUnsortered.findIndex((answer) =>
+      answer.includes(this.question.correct)
+    );
+  },
   answersUnsortered: [],
   indexCurrentQuestion: 0,
+  incrementIndexCurrentQuestion: function () {
+    this.indexCurrentQuestion++;
+  },
   counter: 0,
+  incrementCounter: function () {
+    this.counter++;
+  },
   passed: 20,
 };
 
@@ -16,8 +35,7 @@ const currentQuestion = {
  * @param {array} questions Array de preguntas del fichero JSON.
  */
 function initialize(questions) {
-  questionsArray = questions;
-  questionsArray = getRandomArray(questionsArray);
+  questionsArray = getRandomArray(questions);
   updateUI();
 }
 
@@ -32,7 +50,7 @@ function updateUI() {
 }
 
 /**
- * Desordena de forma aleatoria una array
+ * Devuelve una copia desordenada de un array
  *
  * @param {array} array Array a desordenar
  *
@@ -55,6 +73,10 @@ const doFetch = async (initializeCb) => {
     .then((res) => res.json())
     .then((questions) => initializeCb(questions))
     .catch((error) => console.error(error));
+  function getRandomArray(array) {
+    let arrayCopy = [].concat(array);
+    return arrayCopy.sort(() => Math.random() - 0.5);
+  }
 };
 
 /**
@@ -152,6 +174,9 @@ function createLiAnswer(index, answer) {
  * Devuelve los elementos li del html que tengan la clase ".li__answer".
  *
  * @return {array} elementos li del html que tengan la clase ".li__answer".
+ */ /**
+ * Incrementa la variable counter del objeto objectFilmsQuest
+ *
  */
 function htmlRecovery() {
   return document.querySelectorAll('.li__answer');
@@ -164,21 +189,18 @@ function htmlRecovery() {
  * @param {any} ev escuchado en el click.
  */
 function checkAnswer(ev) {
-  ev.prevenentifier;
-  if (
-    extractNumericIdFromStringId(ev.target.id) ==
-    findCorrectIndexOfAnswers(
-      currentQuestion.answersUnsortered,
-      currentQuestion.question.correct
-    )
-  ) {
-    incrementCounter();
+  ev.preventDefault();
+
+  const idHTML = extractNumericIdFromStringId(ev.target.id);
+  console.log(idHTML);
+  if (currentQuestion.isCorrect(idHTML)) {
+    currentQuestion.incrementCounter();
     printHTMLCounter();
   }
   if (currentQuestion.indexCurrentQuestion >= questionsArray.length - 1) {
     gameOver();
   } else {
-    currentQuestion.indexCurrentQuestion++;
+    currentQuestion.incrementIndexCurrentQuestion();
     updateUI();
   }
 }
@@ -205,14 +227,6 @@ function extractNumericIdFromStringId(idString) {
   let identifier = idString;
   identifier = identifier.replace('li_', '');
   return parseInt(identifier, 10);
-}
-
-/**
- * Incrementa la variable counter del objeto objectFilmsQuest
- *
- */
-function incrementCounter() {
-  currentQuestion.counter++;
 }
 
 /**

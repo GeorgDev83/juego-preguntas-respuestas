@@ -336,6 +336,27 @@ function createHTMLGameOverH2() {
   return gameOverH2;
 }
 
+
+let crono = 0;
+const intervalId = setInterval(() => {
+  crono++;
+  insertTimerHTML();
+}, 1000);
+
+const pararTemporizador = (segundos) => {
+  setTimeout(() => {
+    clearInterval(intervalId);
+    console.log("Se paró");
+  }, segundos * 1000);
+};
+function insertTimerHTML () {
+  const timerH3 = document.querySelector('#timer'); 
+  const minutes = Math.floor (crono/60);
+  const seconds = crono%60;
+  timerH3.innerHTML =(`${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`);
+}
+
+
 /**
  * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
  * pasándole como parámetro la funcion  initializa

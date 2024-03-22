@@ -13,7 +13,7 @@ const passed = 20;
  */
 function initialize(questions) {
   questionsArray = questions;
-  setRandomArray(questionsArray);
+  questionsArray = getRandomArray(questionsArray);
   updateUI();
 }
 
@@ -31,9 +31,12 @@ function updateUI() {
  * Desordena de forma aleatoria una array
  *
  * @param {array} array Array a desordenar
+ *
+ * @returns {array} array desordenado
  */
-function setRandomArray(array) {
-  array.sort(() => Math.random() - 0.5);
+function getRandomArray(array) {
+  let arrayCopy = [].concat(array);
+  return arrayCopy.sort(() => Math.random() - 0.5);
 }
 
 /**
@@ -109,47 +112,15 @@ const printCurrentQuestion = (filmQuestion) => {
   const questionSection = document.querySelector('.question');
   removeChildsCustom(questionSection);
   questionSection.appendChild(elementQuestion);
-  // createAnchorsAnswers(filmQuestion.answers);
   let lis;
   const answersUl = document.querySelector('.answersUl');
   removeChildsCustom(answersUl);
-  for (let index = 0; index < filmQuestion.answers.length; index++) {
-    lis = createLiAnswer(index, filmQuestion.answers);
+  let answersCopy = getRandomArray(filmQuestion.answers);
+  for (let index = 0; index < answersCopy.length; index++) {
+    lis = createLiAnswer(index, answersCopy);
     answersUl.appendChild(lis);
   }
 };
-
-/**
- * Crea los anchor y li de las respuestas actuales
- *
- * @param {array} answers Preguntas
- */
-function createAnchorsAnswers(answers) {
-  const answersUl = document.querySelector('.answerContainer');
-  removeChildsCustom(answersUl);
-
-  setRandomArray(answers);
-  for (let index = 0; index < answers.length; index++) {
-    const elementsLi = createLiAnswer(index, answers[index]);
-    const elementAnchor = createAnchorAnswers(index);
-    elementsLi.appendChild(elementAnchor);
-    answersUl.appendChild(elementsLi);
-  }
-}
-
-/**
- * Crea los anchor de las respuestas actuales
- *
- * @param {number} index indice del anchor
- *
- * @returns {Element} Devuelve el elemento HTML anchor creado.
- */
-function createAnchorAnswers(index) {
-  const elementAnchor = document.createElement('a');
-  elementAnchor.id = 'a_' + index;
-  elementAnchor.className = 'style--a';
-  return elementAnchor;
-}
 
 /**
  * Crea los li de las respuestas actuales

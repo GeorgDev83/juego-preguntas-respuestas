@@ -1,11 +1,14 @@
 'use strict';
 
 let questionsArray = [];
-let currentQuestion = {};
-let answersUnsortered = [];
-let indexCurrentQuestion = 0;
-let counter = 0;
-const passed = 20;
+
+const currentQuestion = {
+  question: {},
+  answersUnsortered: [],
+  indexCurrentQuestion: 0,
+  counter: 0,
+  passed: 20,
+};
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -98,8 +101,9 @@ function createHTMLQuestion(filmQuestion) {
  * @return {Object} objeto de la pregunta actual.
  */
 function getCurrentObjectQuestionFromArray() {
-  currentQuestion = questionsArray[indexCurrentQuestion];
-  return currentQuestion;
+  currentQuestion.question =
+    questionsArray[currentQuestion.indexCurrentQuestion];
+  return currentQuestion.question;
 }
 
 /**
@@ -116,9 +120,13 @@ const printCurrentQuestion = (filmQuestion) => {
   let lis;
   const answersUl = document.querySelector('.answersUl');
   removeChildsCustom(answersUl);
-  answersUnsortered = getRandomArray(filmQuestion.answers);
-  for (let index = 0; index < answersUnsortered.length; index++) {
-    lis = createLiAnswer(index, answersUnsortered);
+  currentQuestion.answersUnsortered = getRandomArray(filmQuestion.answers);
+  for (
+    let index = 0;
+    index < currentQuestion.answersUnsortered.length;
+    index++
+  ) {
+    lis = createLiAnswer(index, currentQuestion.answersUnsortered);
     answersUl.appendChild(lis);
   }
 };
@@ -159,15 +167,18 @@ function checkAnswer(ev) {
   ev.prevenentifier;
   if (
     extractNumericIdFromStringId(ev.target.id) ==
-    findCorrectIndexOfAnswers(answersUnsortered, currentQuestion.correct)
+    findCorrectIndexOfAnswers(
+      currentQuestion.answersUnsortered,
+      currentQuestion.question.correct
+    )
   ) {
     incrementCounter();
     printHTMLCounter();
   }
-  if (indexCurrentQuestion >= questionsArray.length - 1) {
+  if (currentQuestion.indexCurrentQuestion >= questionsArray.length - 1) {
     gameOver();
   } else {
-    indexCurrentQuestion++;
+    currentQuestion.indexCurrentQuestion++;
     updateUI();
   }
 }
@@ -201,7 +212,7 @@ function extractNumericIdFromStringId(idString) {
  *
  */
 function incrementCounter() {
-  counter++;
+  currentQuestion.counter++;
 }
 
 /**
@@ -210,7 +221,7 @@ function incrementCounter() {
  */
 function printHTMLCounter() {
   let h3 = document.querySelector('#count');
-  h3.innerHTML = 'Points: ' + counter;
+  h3.innerHTML = 'Points: ' + currentQuestion.counter;
   h3.style.fontSize = '3rem';
   h3.style.color = 'white';
 }
@@ -273,9 +284,9 @@ function createHTMLGameOverH2() {
   const gameOverH2 = document.querySelector('#gameOverId');
   console.log(gameOverH2);
   gameOverH2.className = 'gameOver';
-  if (counter <= passed) {
+  if (currentQuestion.counter <= currentQuestion.passed) {
     gameOverH2.style.color = 'red';
-  } else if (counter > passed) {
+  } else if (currentQuestion.counter > currentQuestion.passed) {
     gameOverH2.style.color = 'green';
   }
   gameOverH2.style.visibility = 'visible';

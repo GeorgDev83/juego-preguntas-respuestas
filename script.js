@@ -1,5 +1,39 @@
 'use strict';
 
+class Question {
+  constructor(
+    question,
+    answersUnsortered,
+    indexCurrentQuestion,
+    counter,
+    passed
+  ) {
+    this.question = question;
+    this.answersUnsortered = answersUnsortered;
+    this.indexCurrentQuestion = indexCurrentQuestion;
+    this.counter = counter;
+    this.passed = passed;
+  }
+
+  isCorrect(id) {
+    return id === this.correctId();
+  }
+
+  correctId() {
+    return this.answersUnsortered.findIndex((answer) =>
+      answer.includes(this.question.correct)
+    );
+  }
+
+  incrementIndexCurrentQuestion() {
+    this.indexCurrentQuestion++;
+  }
+
+  incrementCounter() {
+    this.counter++;
+  }
+}
+
 let questionsArray = [];
 
 /**
@@ -7,27 +41,7 @@ let questionsArray = [];
  * en relación con el objeto pregunta actual
  *
  */
-const currentQuestion = {
-  question: {},
-  isCorrect: function (id) {
-    return id === this.correctId();
-  },
-  correctId: function () {
-    return this.answersUnsortered.findIndex((answer) =>
-      answer.includes(this.question.correct)
-    );
-  },
-  answersUnsortered: [],
-  indexCurrentQuestion: 0,
-  incrementIndexCurrentQuestion: function () {
-    this.indexCurrentQuestion++;
-  },
-  counter: 0,
-  incrementCounter: function () {
-    this.counter++;
-  },
-  passed: 20,
-};
+const currentQuestion = new Question({}, [], 0, 0, 20);
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -73,10 +87,6 @@ const doFetch = async (initializeCb) => {
     .then((res) => res.json())
     .then((questions) => initializeCb(questions))
     .catch((error) => console.error(error));
-  function getRandomArray(array) {
-    let arrayCopy = [].concat(array);
-    return arrayCopy.sort(() => Math.random() - 0.5);
-  }
 };
 
 /**
@@ -263,7 +273,6 @@ function gameOver() {
   removeQuestionSection();
   removeChildrenAnswerContainer();
   createHTMLCounterH3();
-  /* addGameOverAnswerContainer(); */
   createHTMLGameOverH2();
 }
 /**
@@ -308,15 +317,7 @@ function createHTMLGameOverH2() {
 
   return gameOverH2;
 }
-/**
- *
- * Añade un hijo al contedor de las respuestas.
- *
- */
-function addGameOverAnswerContainer() {
-  const answersSection = document.querySelector('.answers');
-  answersSection.appendChild(createHTMLGameOverH2());
-}
+
 /**
  * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
  * pasándole como parámetro la funcion  initializa

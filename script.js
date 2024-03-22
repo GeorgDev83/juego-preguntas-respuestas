@@ -2,6 +2,7 @@
 
 let questionsArray = [];
 let currentQuestion = {};
+let answersUnsortered = [];
 let indexCurrentQuestion = 0;
 let counter = 0;
 const passed = 20;
@@ -115,9 +116,9 @@ const printCurrentQuestion = (filmQuestion) => {
   let lis;
   const answersUl = document.querySelector('.answersUl');
   removeChildsCustom(answersUl);
-  let answersCopy = getRandomArray(filmQuestion.answers);
-  for (let index = 0; index < answersCopy.length; index++) {
-    lis = createLiAnswer(index, answersCopy);
+  answersUnsortered = getRandomArray(filmQuestion.answers);
+  for (let index = 0; index < answersUnsortered.length; index++) {
+    lis = createLiAnswer(index, answersUnsortered);
     answersUl.appendChild(lis);
   }
 };
@@ -158,7 +159,7 @@ function checkAnswer(ev) {
   ev.prevenentifier;
   if (
     extractNumericIdFromStringId(ev.target.id) ==
-    findCorrectIndexOfAnswers(currentQuestion.answers, currentQuestion.correct)
+    findCorrectIndexOfAnswers(answersUnsortered, currentQuestion.correct)
   ) {
     incrementCounter();
     printHTMLCounter();

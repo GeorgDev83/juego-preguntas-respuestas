@@ -42,10 +42,9 @@ body {
   display: grid;
   grid-template-areas: 
   'header'
-  'main'
-  'footer';
+  'main';
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: 20vh 60vh;
 }
 
 .header{
@@ -119,7 +118,6 @@ ul, .gameOver {
 
 .answers{
   font-family: 'Roboto', sans-serif;
-  grid-area: answers;
   display: flex;
   justify-content: center;
   width: 100%;
@@ -135,7 +133,7 @@ ul, .gameOver {
   max-width: 80%;
   min-width: 80%;
   padding: 1.5rem;
-  margin: 0.6rem 0rem 0.6rem 0rem;
+  margin: 0.6rem 0rem 0.6rem 0re1frm;
   text-decoration: none;
   font-weight: bold;
   cursor: pointer;
@@ -143,9 +141,11 @@ ul, .gameOver {
   font-size: 1.6rem;
 }
 
-footer {
+#count {
   grid-area: footer;
-  align-items: flex-end;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -175,12 +175,6 @@ footer {
   background-color: var(--dark-violet);
   color: antiquewhite;
   transition-duration: 0.4s;
-}
-
-.counter{
-  grid-area: footer;
-  display: flex;
-  justify-content: center;
 }
 
 /*? ANIMACIONES */

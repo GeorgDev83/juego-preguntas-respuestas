@@ -157,6 +157,9 @@ function getCurrentObjectQuestionFromArray() {
  * Crea y muestra en el HTML la pregunta con sus respuestas
  *
  * @param {Object} filmQuestion Pregunta con sus propiedades.
+    passed
+  ) {
+    this.question = questio
  *
  */
 const printCurrentQuestion = (filmQuestion) => {

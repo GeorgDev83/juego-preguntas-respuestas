@@ -1,18 +1,24 @@
 'use strict';
 
 class Question {
-  constructor(
-    question,
-    answersUnsortered,
-    indexCurrentQuestion,
-    counter,
-    passed
-  ) {
+  constructor(question, answersUnsortered, counter, passed) {
     this.question = question;
     this.answersUnsortered = answersUnsortered;
-    this.indexCurrentQuestion = indexCurrentQuestion;
     this.counter = counter;
     this.passed = passed;
+  }
+
+  /**
+   * @param {number} index
+   */
+  set indexCurrentQuestion(index) {
+    if (index < 0)
+      throw new Error('El índice de pregunta debe ser igual o mayor a 0.');
+    else this._indexCurrentQuestion = index;
+  }
+
+  get indexCurrentQuestion() {
+    return this._indexCurrentQuestion;
   }
 
   isCorrect(id) {

@@ -53,7 +53,7 @@ let questionsArray = [];
  * en relación con el objeto pregunta actual
  *
  */
-const currentQuestion = new Question({}, [], 48, 0, 20);
+const currentQuestion = new Question({}, [], 44, 0, 20);
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -61,6 +61,7 @@ const currentQuestion = new Question({}, [], 48, 0, 20);
  * @param {array} questions Array de preguntas del fichero JSON.
  */
 function initialize(questions) {
+  loadMaxScore();
   questionsArray = getRandomArray(questions);
   updateUI();
 }
@@ -317,6 +318,8 @@ function createHTMLCounterH3() {
  * @returns {Element} Retorna el elemento h2.
  */
 function createHTMLGameOverH2() {
+  loadMaxScore();
+  saveMaxScoreInLocalStorage();
   pararTemporizador();
   const gameOverH2 = document.querySelector('#gameOverId');
   console.log(gameOverH2);
@@ -328,6 +331,8 @@ function createHTMLGameOverH2() {
   }
   gameOverH2.style.visibility = 'visible';
   gameOverH2.innerHTML = 'Game Over';
+  const reloadImg = document.querySelector ("#reloadImg");
+  reloadImg.style.visibility = 'visible';
 
   return gameOverH2;
 }
@@ -358,3 +363,42 @@ function insertTimerHTML() {
  *
  */
 document.addEventListener('DOMContentLoaded', doFetch(initialize));
+
+let highScore = 0;
+
+function loadMaxScore() {
+  highScore = JSON.parse(localStorage.getItem("filmQuizEntries")) || 0;
+  // entries.forEach((entry) => addMaxScoreHtml(entry));
+  addMaxScoreHtml (highScore);
+}
+
+function saveMaxScoreInLocalStorage() {
+  // const entries = JSON.parse(localStorage.getItem("filmQuizEntries")) || 0;
+  
+  if (currentQuestion.counter > highScore ) {
+    highScore = currentQuestion.counter;
+    addMaxScoreHtml(highScore);
+    blinkMaxScoreHtml();
+  }
+
+  // entries.push(entry);
+  localStorage.setItem("filmQuizEntries", JSON.stringify(highScore));
+}
+
+// function deleteEntry() {
+//   let entries = JSON.parse(localStorage.getItem("filmQuizEntries")) || [];
+//   entries = entries.filter((entry) => entry.id.toString() !== entryId);
+//   localStorage.setItem("filmQuizEntries", JSON.stringify(entries));
+//   updateMaxScoreHtml(entry);
+// }
+
+function addMaxScoreHtml (entry){
+  const maxScoreH3 = document.querySelector("#highScore");
+  maxScoreH3.innerHTML = "High Score: "+ entry;
+}
+function blinkMaxScoreHtml (){
+
+  const maxScoreH3 = document.querySelector("#highScore");
+  maxScoreH3.style = "color: green; animation: blink 1s linear infinite";
+}
+

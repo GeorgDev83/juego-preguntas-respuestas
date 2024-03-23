@@ -32,7 +32,12 @@ JavaScript
 Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para obtener más información.
 
 ## Contacto
-Si tienes alguna pregunta o sugerencia sobre Film Quiz, no dudes en ponerte en contacto con nosotros en Filquiz@example.com.
+Si tienes alguna pregunta o sugerencia sobre Film Quiz, no dudes en ponerte en contacto con nosotros a través de:
+
+-   https://github.com/GeorgDev83
+-   https://github.com/nfbritos
+-   https://github.com/Miguel-Iglesias
+
 
 ## Roadmap
 ```

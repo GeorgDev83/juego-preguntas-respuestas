@@ -32,7 +32,7 @@ html {
 body {
   height: 100vh;
   background-color: var(--dark);
-  background-image: url('img/descarga\ \(3\).jpeg');
+  background-image: url("img/descarga\ \(3\).jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -121,9 +121,6 @@ body {
   transition-duration: 0.4s;
 }
 
-
-
-
 #answers {
   grid-area: answers;
   font-family: "Roboto", sans-serif;
@@ -171,6 +168,13 @@ ul.answersUl {
 #reloadImg {
   margin-top: 4rem;
   z-index: 3;
+  cursor: pointer;
+  animation: spin 1s linear infinite;
+}
+
+#reloadImg:active {
+  height: 4.5rem;
+  width: 4.5rem;
 }
 
 footer {
@@ -182,8 +186,6 @@ footer {
   font-size: 3rem;
   color: whitesmoke;
 }
-
-
 
 @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
   .question::after {
@@ -213,11 +215,22 @@ footer {
     transform: scale(1);
   }
 }
-@keyframes blink{
-  0%{opacity: 0;}
-  50%{opacity: .5;}
-  100%{opacity: 1;}
+@keyframes blink {
+  0% {
+    opacity: 0;
   }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
 
 /*? -- MEDIA QUERIES -- */
 @media (max-width: 768px) and (min-height: 768px) {
@@ -246,9 +259,9 @@ footer {
     max-width: 65%;
   }
 
-#main-container {
-  height: 150vh;
-}
+  #main-container {
+    height: 150vh;
+  }
 
   .header {
     font-size: 8rem;

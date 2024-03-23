@@ -278,6 +278,9 @@ function addEventListenerCustom(lis) {
   });
 }
 
+const refreshButton = document.querySelector('#reloadImg');
+refreshButton.addEventListener('click', function(){location.reload()});
+
 /**
  * Funcion game Over se llama cuando acaba el juego. Limpiamos lo que
  * nos interesa de la pantalla y mostramos la puntuación total.
@@ -320,7 +323,7 @@ function createHTMLCounterH3() {
 function createHTMLGameOverH2() {
   loadMaxScore();
   saveMaxScoreInLocalStorage();
-  pararTemporizador();
+  stopCrono();
   const gameOverH2 = document.querySelector('#gameOverId');
   console.log(gameOverH2);
   gameOverH2.className = 'gameOver';
@@ -343,7 +346,7 @@ const intervalId = setInterval(() => {
   insertTimerHTML();
 }, 1000);
 
-const pararTemporizador = () => {
+const stopCrono = () => {
   setTimeout(() => {
     clearInterval(intervalId);
   }, 0);
@@ -357,12 +360,12 @@ function insertTimerHTML() {
   }`;
 }
 
-/**
- * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
- * pasándole como parámetro la funcion  initializa
- *
- */
-document.addEventListener('DOMContentLoaded', doFetch(initialize));
+  /**
+   * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
+   * pasándole como parámetro la funcion  initializa
+   *
+   */
+  document.addEventListener('DOMContentLoaded', doFetch(initialize));
 
 let highScore = 0;
 

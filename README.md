@@ -48,3 +48,6 @@ Añadir y vincular fotografías de la pelicula referenciada en la pregunta.
 
 ## Autores
 Este proyecto fue creado por tres compañeros aficionados al cine. Por lo que queremos agradecerle sinceramente su contribución.
+
+
+![Descripción de la imagen](/img/Diagrama_de_flujo.svg)

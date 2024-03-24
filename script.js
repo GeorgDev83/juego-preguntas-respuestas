@@ -53,7 +53,7 @@ let questionsArray = [];
  * en relación con el objeto pregunta actual
  *
  */
-const currentQuestion = new Question({}, [], 44, 0, 20);
+const currentQuestion = new Question({}, [], 0, 0, 20);
 
 /**
  * Inicializa el funcionamiento de la web app.
@@ -278,8 +278,9 @@ function addEventListenerCustom(lis) {
   });
 }
 
-const refreshButton = document.querySelector('#reloadImg');
-refreshButton.addEventListener('click', function(){location.reload()});
+function addRefreshEventClick (){
+  const refreshButton = document.querySelector('#reloadImg');
+refreshButton.addEventListener('click', function(){location.reload()});}
 
 /**
  * Funcion game Over se llama cuando acaba el juego. Limpiamos lo que
@@ -291,6 +292,7 @@ function gameOver() {
   removeChildrenAnswerContainer();
   createHTMLCounterH3();
   createHTMLGameOverH2();
+  addRefreshEventClick();
 }
 /**
  * Eliminamos del HTML el elemento con id "generalContainer".

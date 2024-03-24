@@ -32,7 +32,7 @@ html {
 body {
   height: 100vh;
   background-color: var(--dark);
-  background-image: url("img/descarga\ \(3\).jpeg");
+  background-image: url("img/backgroundApp.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -59,12 +59,11 @@ body {
   font-weight: 900;
   letter-spacing: 0.3rem;
   color: transparent;
-  background-image: url(img/Diseno_sin_titulo.png);
+  background-image: url(img/TitleBackground.png);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
   background-clip: text;
-
   margin: 1rem 0 3rem 0;
   padding: 0.5rem;
 }
@@ -87,7 +86,6 @@ body {
   font-weight: bold;
   margin: 0rem 2rem 0rem 2rem;
   padding: 0.8rem;
-
   border-radius: 1rem;
   color: whitesmoke;
   text-shadow: 2px 2px 4px black;
@@ -124,9 +122,6 @@ body {
 #answers {
   grid-area: answers;
   font-family: "Roboto", sans-serif;
-  /* display: flex;
-  justify-content: center;
-  align-content: flex-end; */
   margin-top: 5rem;
   width: 80%;
   opacity: 0.85;
@@ -138,8 +133,6 @@ ul.answersUl {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /*!Anadir una clase al elemento gameOver con min-width y padding*/
-  /* margin: 0 auto;  */
   list-style: none;
   border-radius: 1.5rem;
   background-color: var(--dark);

@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class Question {
   constructor(
@@ -23,7 +23,7 @@ class Question {
    */
   set indexCurrentQuestion(value) {
     if (value < 0)
-      throw new Error('El índice de pregunta debe ser igual o mayor a 0.');
+      throw new Error("El índice de pregunta debe ser igual o mayor a 0.");
     else this._indexCurrentQuestion = value;
   }
 
@@ -95,7 +95,7 @@ function getRandomArray(array) {
  */
 const doFetch = async (initializeCb) => {
   const urlFetch =
-    'https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json';
+    "https://gist.githubusercontent.com/bertez/2528edb2ab7857dae29c39d1fb669d31/raw/4891dde8eac038aa5719512adee4b4243a8063fd/quiz.json";
   await fetch(urlFetch)
     .then((res) => res.json())
     .then((questions) => initializeCb(questions))
@@ -134,7 +134,7 @@ function removeChildsCustom(elem) {
  * @return {Element} elemento contenedor.
  */
 function createHTMLQuestion(filmQuestion) {
-  const elementQuestion = document.querySelector('.questionContainer');
+  const elementQuestion = document.querySelector(".questionContainer");
   elementQuestion.innerHTML = filmQuestion.question;
 
   return elementQuestion;
@@ -155,18 +155,15 @@ function getCurrentObjectQuestionFromArray() {
  * Crea y muestra en el HTML la pregunta con sus respuestas
  *
  * @param {Object} filmQuestion Pregunta con sus propiedades.
-    passed
-  ) {
-    this.question = questio
  *
  */
 const printCurrentQuestion = (filmQuestion) => {
   const elementQuestion = createHTMLQuestion(filmQuestion);
-  const questionSection = document.querySelector('.question');
+  const questionSection = document.querySelector(".question");
   removeChildsCustom(questionSection);
   questionSection.appendChild(elementQuestion);
   let lis;
-  const answersUl = document.querySelector('.answersUl');
+  const answersUl = document.querySelector(".answersUl");
   removeChildsCustom(answersUl);
   currentQuestion.answersUnsortered = getRandomArray(filmQuestion.answers);
   for (
@@ -188,9 +185,9 @@ const printCurrentQuestion = (filmQuestion) => {
  * @returns {array} contiene los li's creados.
  */
 function createLiAnswer(index, answer) {
-  const liAns = document.createElement('li');
-  liAns.id = 'li_' + index;
-  liAns.className = 'li__answer';
+  const liAns = document.createElement("li");
+  liAns.id = "li_" + index;
+  liAns.className = "li__answer";
   liAns.innerText = answer[index];
 
   return liAns;
@@ -205,7 +202,7 @@ function createLiAnswer(index, answer) {
  *
  */
 function htmlRecovery() {
-  return document.querySelectorAll('.li__answer');
+  return document.querySelectorAll(".li__answer");
 }
 
 /**
@@ -249,7 +246,7 @@ function findCorrectIndexOfAnswers(answers, correctAnswer) {
  */
 function extractNumericIdFromStringId(idString) {
   let identifier = idString;
-  identifier = identifier.replace('li_', '');
+  identifier = identifier.replace("li_", "");
   return parseInt(identifier, 10);
 }
 
@@ -258,10 +255,10 @@ function extractNumericIdFromStringId(idString) {
  *
  */
 function printHTMLCounter() {
-  let h3 = document.querySelector('#count');
-  h3.innerHTML = 'Points: ' + currentQuestion.counter;
-  h3.style.fontSize = '3rem';
-  h3.style.color = 'white';
+  let h3 = document.querySelector("#count");
+  h3.innerHTML = "Points: " + currentQuestion.counter;
+  h3.style.fontSize = "3rem";
+  h3.style.color = "white";
 }
 
 /**
@@ -272,15 +269,18 @@ function printHTMLCounter() {
  */
 function addEventListenerCustom(lis) {
   lis.forEach((element) => {
-    element.addEventListener('click', function (e) {
+    element.addEventListener("click", function (e) {
       checkAnswer(e);
     });
   });
 }
 
-function addRefreshEventClick (){
-  const refreshButton = document.querySelector('#reloadImg');
-refreshButton.addEventListener('click', function(){location.reload()});}
+function addRefreshEventClick() {
+  const refreshButton = document.querySelector("#reloadImg");
+  refreshButton.addEventListener("click", function () {
+    location.reload();
+  });
+}
 
 /**
  * Funcion game Over se llama cuando acaba el juego. Limpiamos lo que
@@ -298,14 +298,14 @@ function gameOver() {
  * Eliminamos del HTML el elemento con id "generalContainer".
  */
 function removeQuestionSection() {
-  const questionSection = document.querySelector('.question');
+  const questionSection = document.querySelector(".question");
   questionSection.remove();
 }
 /**
  * Eliminamos del HTML los hijos del elemento con clase "answerContainer".
  */
 function removeChildrenAnswerContainer() {
-  const answersSection = document.querySelector('#answers');
+  const answersSection = document.querySelector("#answers");
   answersSection.remove();
 }
 /**
@@ -313,7 +313,7 @@ function removeChildrenAnswerContainer() {
  * a mayúsculas.
  */
 function createHTMLCounterH3() {
-  let counterH3 = document.querySelector('#count');
+  let counterH3 = document.querySelector("#count");
   counterH3.innerHTML = counterH3.textContent.toUpperCase();
 }
 /**
@@ -326,84 +326,96 @@ function createHTMLGameOverH2() {
   loadMaxScore();
   saveMaxScoreInLocalStorage();
   stopCrono();
-  const gameOverH2 = document.querySelector('#gameOverId');
+  const gameOverH2 = document.querySelector("#gameOverId");
   console.log(gameOverH2);
-  gameOverH2.className = 'gameOver';
+  gameOverH2.className = "gameOver";
   if (currentQuestion.counter <= currentQuestion.passed) {
-    gameOverH2.style.color = 'red';
+    gameOverH2.style.color = "red";
   } else if (currentQuestion.counter > currentQuestion.passed) {
-    gameOverH2.style.color = 'green';
+    gameOverH2.style.color = "green";
   }
-  gameOverH2.style.visibility = 'visible';
-  gameOverH2.innerHTML = 'Game Over';
-  const reloadImg = document.querySelector ("#reloadImg");
-  reloadImg.style.visibility = 'visible';
+  gameOverH2.style.visibility = "visible";
+  gameOverH2.innerHTML = "Game Over";
+  const reloadImg = document.querySelector("#reloadImg");
+  reloadImg.style.visibility = "visible";
 
   return gameOverH2;
 }
-
+/**
+ * Variable que acumula el tiempo transcurrido desde 
+ * la entrada a la web hasta el fin del juego.
+ */
 let crono = 0;
+/**
+ * Temporizador que cuenta de un segundo a otro.
+ */
 const intervalId = setInterval(() => {
   crono++;
   insertTimerHTML();
 }, 1000);
-
+/**
+ * Mata el temporizador señalado dentro del id (intervalId).
+ */
 const stopCrono = () => {
   setTimeout(() => {
     clearInterval(intervalId);
   }, 0);
 };
+/**
+ * Modifica el elemento del HTML señalado para el temporizador.
+ */
 function insertTimerHTML() {
-  const timerH3 = document.querySelector('#timer');
+  const timerH3 = document.querySelector("#timer");
   const minutes = Math.floor(crono / 60);
   const seconds = crono % 60;
-  timerH3.innerHTML = `${minutes < 10 ? '0' + minutes : minutes} : ${
-    seconds < 10 ? '0' + seconds : seconds
+  timerH3.innerHTML = `${minutes < 10 ? "0" + minutes : minutes} : ${
+    seconds < 10 ? "0" + seconds : seconds
   }`;
 }
-
-  /**
-   * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
-   * pasándole como parámetro la funcion  initializa
-   *
-   */
-  document.addEventListener('DOMContentLoaded', doFetch(initialize));
-
-let highScore = 0;
-
+/**
+ * Máxima puntuación.
+ */
+let highScore = 0; 
+/**
+ * Extrae del localStorage la máxima puntuación guardada.
+ */
 function loadMaxScore() {
   highScore = JSON.parse(localStorage.getItem("filmQuizEntries")) || 0;
-  // entries.forEach((entry) => addMaxScoreHtml(entry));
-  addMaxScoreHtml (highScore);
+  addMaxScoreHtml(highScore);
 }
-
+/**
+ * Guarda dentro del localStorage la puntuación máxima alcanzada.
+ */
 function saveMaxScoreInLocalStorage() {
-  // const entries = JSON.parse(localStorage.getItem("filmQuizEntries")) || 0;
-  
-  if (currentQuestion.counter > highScore ) {
+  if (currentQuestion.counter > highScore) {
     highScore = currentQuestion.counter;
     addMaxScoreHtml(highScore);
     blinkMaxScoreHtml();
   }
 
-  // entries.push(entry);
   localStorage.setItem("filmQuizEntries", JSON.stringify(highScore));
 }
-
-// function deleteEntry() {
-//   let entries = JSON.parse(localStorage.getItem("filmQuizEntries")) || [];
-//   entries = entries.filter((entry) => entry.id.toString() !== entryId);
-//   localStorage.setItem("filmQuizEntries", JSON.stringify(entries));
-//   updateMaxScoreHtml(entry);
-// }
-
-function addMaxScoreHtml (entry){
+/**
+ * Selecciona el elemento HTML para añadirle la máxima puntuación.
+ * 
+ * @param {number} entry Máxima puntuación.
+ * 
+ */
+function addMaxScoreHtml(entry) {
   const maxScoreH3 = document.querySelector("#highScore");
-  maxScoreH3.innerHTML = "High Score: "+ entry;
+  maxScoreH3.innerHTML = "High Score: " + entry;
 }
-function blinkMaxScoreHtml (){
-
+/**
+ * Añade un estilo CSS al elemento HTML que contiene la máxima puntuación.
+ */
+function blinkMaxScoreHtml() {
   const maxScoreH3 = document.querySelector("#highScore");
   maxScoreH3.style = "color: green; animation: blink 1s linear infinite";
 }
 
+/**
+ * Añadimos al evento DOMContentLoaded la llamada a la función doFetch
+ * pasándole como parámetro la funcion  initializa
+ *
+ */
+document.addEventListener("DOMContentLoaded", doFetch(initialize));
